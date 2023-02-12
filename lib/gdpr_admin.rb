@@ -2,7 +2,15 @@
 
 require 'gdpr_admin/version'
 require 'gdpr_admin/engine'
+require 'gdpr_admin/application_data_policy'
+require 'gdpr_admin/tenant_adapters/acts_as_tenant_adapter'
 
 module GdprAdmin
-  # Your code goes here...
+  def self.configure
+    yield config
+  end
+
+  def self.config
+    @config ||= Configuration.new
+  end
 end

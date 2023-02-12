@@ -24,7 +24,9 @@ module GdprAdmin
     def process!
       with_lock { processing! }
       with_lock do
-        process_policies
+        GdprAdmin.configuration.tenant_adapter.with_tenant(tenant) do
+          process_policies
+        end
         completed!
       end
     rescue StandardError
