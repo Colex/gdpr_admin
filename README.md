@@ -1,8 +1,5 @@
-# GdprAdmin
-Short description and motivation.
-
-## Usage
-How to use my plugin.
+# GDPR Admin
+Engine for processing GDPR processes. Define the strategies for dealing with data requests and data anonymization/removal.
 
 ## Installation
 Add this line to your application's Gemfile:
