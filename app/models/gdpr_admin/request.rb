@@ -2,8 +2,8 @@
 
 module GdprAdmin
   class Request < ApplicationRecord
-    belongs_to :tenant, class_name: 'Organization'
-    belongs_to :requester, class_name: 'AdminUser'
+    belongs_to :tenant, class_name: GdprAdmin.config.tenant_class_name
+    belongs_to :requester, class_name: GdprAdmin.config.requester_class_name
 
     enum status: {
       pending: 'pending',
@@ -24,7 +24,7 @@ module GdprAdmin
     def process!
       with_lock { processing! }
       with_lock do
-        GdprAdmin.configuration.tenant_adapter.with_tenant(tenant) do
+        GdprAdmin.config.tenant_adapter.with_tenant(tenant) do
           process_policies
         end
         completed!
