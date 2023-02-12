@@ -1,0 +1,38 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+  Exclude:
+    - node_modules/**/*
+    - spec/dummy/db/schema.rb
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+Metrics/AbcSize:
+  Enabled: true
+  Exclude:
+    - spec/dummy/db/seeds.rb
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/dummy/config/initializers/*
+Metrics/MethodLength:
+  Enabled: true
+  Exclude:
+    - db/**/*
+    - spec/dummy/db/**/*
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+Style/AccessorGrouping:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
