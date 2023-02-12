@@ -24,16 +24,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_12_191512) do
     t.index ["user_id"], name: "index_activity_logs_on_user_id"
   end
 
-  create_table "gdpr_admin_tasks", force: :cascade do |t|
+  create_table "gdpr_admin_requests", force: :cascade do |t|
     t.integer "tenant_id", null: false
     t.integer "requester_id", null: false
-    t.string "request"
-    t.string "status"
+    t.string "request_type", null: false
+    t.string "status", default: "pending", null: false
     t.datetime "data_older_than"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["requester_id"], name: "index_gdpr_admin_tasks_on_requester_id"
-    t.index ["tenant_id"], name: "index_gdpr_admin_tasks_on_tenant_id"
+    t.index ["requester_id"], name: "index_gdpr_admin_requests_on_requester_id"
+    t.index ["tenant_id"], name: "index_gdpr_admin_requests_on_tenant_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_12_191512) do
 
   add_foreign_key "activity_logs", "organizations"
   add_foreign_key "activity_logs", "users"
-  add_foreign_key "gdpr_admin_tasks", "requesters"
-  add_foreign_key "gdpr_admin_tasks", "tenants"
+  add_foreign_key "gdpr_admin_requests", "admin_users", column: "requester_id"
+  add_foreign_key "gdpr_admin_requests", "organizations", column: "tenant_id"
   add_foreign_key "users", "organizations"
 end
