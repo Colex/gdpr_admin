@@ -17,6 +17,7 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - spec/dummy/config/initializers/*
+    - spec/**/*_spec.rb
 Metrics/MethodLength:
   Enabled: true
   Exclude:
