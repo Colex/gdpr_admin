@@ -25,9 +25,7 @@ module GdprAdmin
       GdprAdmin.load_data_policies
       with_lock { processing! }
       with_lock do
-        GdprAdmin.config.tenant_adapter.with_tenant(tenant) do
-          process_policies
-        end
+        GdprAdmin.config.tenant_adapter.with_tenant(tenant) { process_policies }
         completed!
       end
     rescue StandardError

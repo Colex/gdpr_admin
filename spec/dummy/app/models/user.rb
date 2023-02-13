@@ -3,7 +3,8 @@
 class User < ApplicationRecord
   acts_as_tenant(:organization)
 
-  attr_reader :password, :password_confirmation
+  attr_accessor :password_confirmation
+  attr_reader :password
 
   has_many :activity_logs
 
@@ -16,10 +17,6 @@ class User < ApplicationRecord
   def password=(value)
     @password = value
     self.password_digest = User.digest_password(password)
-  end
-
-  def password_confirmation=(value)
-    @password_confirmation = value
   end
 
   private

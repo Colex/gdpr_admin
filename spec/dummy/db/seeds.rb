@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_record/fixtures'
 
 fixtures_dir = Rails.root.join('db', 'fixtures')

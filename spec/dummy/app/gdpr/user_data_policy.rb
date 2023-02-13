@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserDataPolicy < GdprAdmin::ApplicationDataPolicy
   def scope
     User.all
