@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_12_191512) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_13_172422) do
   create_table "activity_logs", force: :cascade do |t|
     t.integer "organization_id", null: false
     t.integer "user_id", null: false
@@ -22,6 +22,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_12_191512) do
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_activity_logs_on_organization_id"
     t.index ["user_id"], name: "index_activity_logs_on_user_id"
+  end
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "name"
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
   end
 
   create_table "gdpr_admin_requests", force: :cascade do |t|
@@ -45,10 +53,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_12_191512) do
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "email"
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.integer "organization_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
