@@ -14,4 +14,13 @@ module GdprAdmin
   def self.config
     @config ||= Configuration.new
   end
+
+  def self.load_data_policies
+    return if Rails.application.config.eager_load
+
+    Dir.glob(Rails.root.join('app', 'gdpr', '**', '*.rb')).each do |file|
+      puts "Loading #{file}"
+      require_dependency file
+    end
+  end
 end

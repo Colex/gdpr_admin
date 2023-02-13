@@ -22,6 +22,7 @@ module GdprAdmin
     after_create_commit :schedule_processing
 
     def process!
+      GdprAdmin.load_data_policies
       with_lock { processing! }
       with_lock do
         GdprAdmin.config.tenant_adapter.with_tenant(tenant) do
