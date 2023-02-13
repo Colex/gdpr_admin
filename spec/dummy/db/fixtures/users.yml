@@ -3,13 +3,22 @@ alex:
   first_name: Alex
   last_name: Santos
   email: alex.santos@reachdesk.com
+  password_digest: <%= Digest::SHA256.hexdigest('password_alex') %>
 fox:
   organization: starfox
   first_name: Fox
   last_name: McCloud
   email: fox.mccloud@starfox.com
+  password_digest: <%= Digest::SHA256.hexdigest('password_fox') %>
+falco:
+  organization: starfox
+  first_name: Falco
+  last_name: Lombardi
+  email: falco.lombardi@starfox.com
+  password_digest: <%= Digest::SHA256.hexdigest('password_falco') %>
 falco:
   organization: starfox
   first_name: Slippy
   last_name: Toad
   email: slippy.toad@starfox.com
+  password_digest: <%= Digest::SHA256.hexdigest('password_slippy') %>

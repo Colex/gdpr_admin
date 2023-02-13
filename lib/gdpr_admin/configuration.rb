@@ -2,12 +2,12 @@
 
 module GdprAdmin
   class Configuration
-    attr_accessor :tenant_class, :requester_class_name
+    attr_accessor :tenant_class, :requester_class
     attr_writer :tenant_adapter
 
     def initialize
       @tenant_class = 'Organization'
-      @requester_class_name = 'AdminUser'
+      @requester_class = 'AdminUser'
       @tenant_adapter = GdprAdmin::TenantAdapters::ActsAsTenantAdapter.new
     end
 

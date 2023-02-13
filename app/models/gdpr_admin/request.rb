@@ -2,8 +2,8 @@
 
 module GdprAdmin
   class Request < ApplicationRecord
-    belongs_to :tenant, class_name: GdprAdmin.config.tenant_class_name
-    belongs_to :requester, class_name: GdprAdmin.config.requester_class_name
+    belongs_to :tenant, class_name: GdprAdmin.config.tenant_class
+    belongs_to :requester, class_name: GdprAdmin.config.requester_class
 
     enum status: {
       pending: 'pending',
@@ -31,6 +31,7 @@ module GdprAdmin
       end
     rescue StandardError
       failed!
+      raise
     end
 
     def erase?
@@ -42,7 +43,7 @@ module GdprAdmin
     end
 
     def schedule_processing
-      TaskRunnerJob.set(wait: 4.hours).perform_later(self)
+      RequestProcessorJob.set(wait: 4.hours).perform_later(self)
     end
 
     private
