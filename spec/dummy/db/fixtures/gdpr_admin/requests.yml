@@ -1,5 +1,5 @@
 request_a:
-  organization: starfox
-  requester: kazooie
+  tenant: starfox
+  requester: kazooei
   request_type: erase_all
   status: pending

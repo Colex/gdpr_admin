@@ -16,7 +16,7 @@ falco:
   last_name: Lombardi
   email: falco.lombardi@starfox.com
   password_digest: <%= Digest::SHA256.hexdigest('password_falco') %>
-falco:
+slippy:
   organization: starfox
   first_name: Slippy
   last_name: Toad
