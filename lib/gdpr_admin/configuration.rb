@@ -15,7 +15,7 @@ module GdprAdmin
     def tenant_adapter
       return @tenant_adapter unless @tenant_adapter.is_a?(Symbol)
 
-      GdprAdmin::TenantAdapters.const_get("#{@tenant_adapter}_adapter".classify)
+      GdprAdmin::TenantAdapters.const_get("#{@tenant_adapter}_adapter".classify).new
     end
   end
 end
