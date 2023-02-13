@@ -2,13 +2,14 @@
 
 module GdprAdmin
   class Configuration
-    attr_accessor :tenant_class, :requester_class
+    attr_accessor :tenant_class, :requester_class, :data_policies_path
     attr_writer :tenant_adapter
 
     def initialize
       @tenant_class = 'Organization'
       @requester_class = 'AdminUser'
       @tenant_adapter = TenantAdapters::ActsAsTenantAdapter.new
+      @data_policies_path = Rails.root.join('app', 'gdpr')
     end
 
     def tenant_adapter
