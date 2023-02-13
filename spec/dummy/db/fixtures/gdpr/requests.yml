@@ -1,0 +1,5 @@
+request_a:
+  organization: starfox
+  requester: kazooie
+  request_type: erase_all
+  status: pending
