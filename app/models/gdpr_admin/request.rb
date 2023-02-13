@@ -19,6 +19,7 @@ module GdprAdmin
       erase_timeframe: 'erase_timeframe',
     }
 
+    before_validation :set_default_data_older_than!
     after_create_commit :schedule_processing
 
     def process!
@@ -55,6 +56,10 @@ module GdprAdmin
           policy.erase(record) if erase?
         end
       end
+    end
+
+    def set_default_data_older_than!
+      self.data_older_than ||= Time.zone.now
     end
   end
 end

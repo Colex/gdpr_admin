@@ -7,7 +7,7 @@ class CreateGdprAdminRequests < ActiveRecord::Migration[7.0]
       t.references :requester, null: false, foreign_key: { to_table: :admin_users }
       t.string :request_type, null: false
       t.string :status, default: 'pending', null: false
-      t.datetime :data_older_than
+      t.datetime :data_older_than, null: false
 
       t.timestamps
     end
