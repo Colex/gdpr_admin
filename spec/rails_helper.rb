@@ -5,7 +5,7 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start('rails')
 
 require File.expand_path('dummy/config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -37,6 +37,9 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+ActiveJob::Base.queue_adapter = :test
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root}/spec/fixtures"

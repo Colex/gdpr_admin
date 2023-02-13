@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe GdprAdmin, type: :lib do
   it 'has a version number' do
-    expect(GdprAdmin::VERSION).not_to be nil
+    expect(GdprAdmin::VERSION).to match(/\d+\.\d+\.\d+/)
   end
 
   describe '.configure' do
