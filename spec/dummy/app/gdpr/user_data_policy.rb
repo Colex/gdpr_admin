@@ -9,8 +9,7 @@ class UserDataPolicy < GdprAdmin::ApplicationDataPolicy
       email: "anonymized.user#{user.id}@company.org",
       first_name: 'Anonymized',
       last_name: "User #{user.id}",
-      password: password,
-      password_confirmation: password,
+      password_digest: User.digest_password(password),
     )
   end
 end

@@ -10,9 +10,13 @@ class User < ApplicationRecord
 
   validate :validate_password!
 
+  def self.digest_password(password)
+    Digest::SHA256.hexdigest(password)
+  end
+
   def password=(value)
     @password = value
-    self.password_digest = Digest::SHA256.hexdigest(password)
+    self.password_digest = User.digest_password(password)
   end
 
   def password_confirmation=(value)
