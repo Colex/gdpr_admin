@@ -8,7 +8,7 @@ module GdprAdmin
     def initialize
       @tenant_class = 'Organization'
       @requester_class = 'AdminUser'
-      @tenant_adapter = GdprAdmin::TenantAdapters::ActsAsTenantAdapter.new
+      @tenant_adapter = TenantAdapters::ActsAsTenantAdapter.new
     end
 
     def tenant_adapter

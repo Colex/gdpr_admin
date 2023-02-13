@@ -19,7 +19,6 @@ module GdprAdmin
     return if Rails.application.config.eager_load
 
     Dir.glob(Rails.root.join('app', 'gdpr', '**', '*.rb')).each do |file|
-      puts "Loading #{file}"
       require_dependency file
     end
   end

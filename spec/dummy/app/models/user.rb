@@ -5,7 +5,6 @@ class User < ApplicationRecord
 
   attr_reader :password, :password_confirmation
 
-  belongs_to :organization
   has_many :activity_logs
 
   validate :validate_password!
