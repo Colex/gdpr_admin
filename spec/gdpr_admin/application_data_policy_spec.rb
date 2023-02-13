@@ -8,8 +8,8 @@ RSpec.describe GdprAdmin::ApplicationDataPolicy do
   let(:request) { instance_double('GdprAdmin::Request') }
 
   describe '#scope' do
-    it 'returns an empty collection' do
-      expect(policy.scope.to_sql).to eql('SELECT "".* FROM "" WHERE (1=0)')
+    it 'raises SkipDataPolicyError' do
+      expect { policy.scope }.to raise_error(GdprAdmin::SkipDataPolicyError)
     end
   end
 

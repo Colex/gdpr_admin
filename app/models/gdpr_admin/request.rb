@@ -55,6 +55,8 @@ module GdprAdmin
           policy.export(record) if export?
           policy.erase(record) if erase?
         end
+      rescue SkipDataPolicyError
+        next
       end
     end
 

@@ -7,7 +7,7 @@ module GdprAdmin
     end
 
     def scope
-      ApplicationRecord.none
+      raise SkipDataPolicyError
     end
 
     def export(_record)
