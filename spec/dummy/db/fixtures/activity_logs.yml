@@ -1,0 +1,21 @@
+falco_a:
+  organization: starfox
+  user: falco
+  sign_in_ip: 2001:db8:85a3:8d3:1319:8a2e:370:7348
+  city: London
+  region: England
+  country: United Kingdom
+falco_b:
+  organization: starfox
+  user: falco
+  sign_in_ip: 230.231.1.2
+  city: Vilnius
+  region: Vilniaus miestas
+  country: Lithuania
+fox_a:
+  organization: starfox
+  user: fox
+  sign_in_ip: 156.12.167.2
+  city: Sintra
+  region: Lisbon
+  country: Portugal

@@ -1,0 +1,15 @@
+alex:
+  organization: reachdesk
+  first_name: Alex
+  last_name: Santos
+  email: alex.santos@reachdesk.com
+fox:
+  organization: starfox
+  first_name: Fox
+  last_name: McCloud
+  email: fox.mccloud@starfox.com
+falco:
+  organization: starfox
+  first_name: Slippy
+  last_name: Toad
+  email: slippy.toad@starfox.com
