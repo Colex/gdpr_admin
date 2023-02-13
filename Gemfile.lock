@@ -72,6 +72,9 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts_as_tenant (0.6.1)
+      rails (>= 5.2)
+      request_store (>= 1.0.5)
     ast (2.4.2)
     builder (3.2.4)
     concurrent-ruby (1.2.0)
@@ -143,6 +146,8 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.7.0)
+    request_store (1.5.1)
+      rack (>= 1.4)
     rexml (3.2.5)
     rubocop (1.45.1)
       json (~> 2.3)
@@ -189,6 +194,7 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
+  acts_as_tenant
   gdpr_admin!
   rubocop (~> 1.45.1)
   rubocop-performance (~> 1.11.5)
