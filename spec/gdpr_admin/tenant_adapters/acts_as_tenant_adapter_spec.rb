@@ -6,7 +6,7 @@ RSpec.describe GdprAdmin::TenantAdapters::ActsAsTenantAdapter do
   subject(:adapter) { described_class.new }
 
   describe '#with_tenant' do
-    let(:tenant) { double(:tenant) }
+    let(:tenant) { double(:tenant) } # rubocop:disable RSpec/VerifiedDoubles
     let(:block) { -> { :block } }
 
     it 'calls ActsAsTenant.with_tenant' do
