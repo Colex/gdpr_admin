@@ -2,7 +2,8 @@
 
 module GdprAdmin
   class Configuration
-    attr_accessor :tenant_class, :requester_class, :data_policies_path, :jobs_queue
+    attr_accessor :tenant_class, :requester_class, :data_policies_path, :jobs_queue,
+                  :erasure_grace_period, :export_grace_period
     attr_writer :tenant_adapter
 
     def initialize
@@ -11,6 +12,8 @@ module GdprAdmin
       @tenant_adapter = TenantAdapters::ActsAsTenantAdapter.new
       @data_policies_path = Rails.root.join('app', 'gdpr')
       @jobs_queue = :default
+      @erasure_grace_period = 4.hours
+      @export_grace_period = nil
     end
 
     def tenant_adapter

@@ -43,10 +43,14 @@ module GdprAdmin
     end
 
     def schedule_processing
-      RequestProcessorJob.set(wait: 4.hours).perform_later(self)
+      RequestProcessorJob.set(wait: grace_period).perform_later(self)
     end
 
     private
+
+    def grace_period
+      export? ? GdprAdmin.config.export_grace_period : GdprAdmin.config.erasure_grace_period
+    end
 
     def process_policies
       ApplicationDataPolicy.descendants.each do |policy_class|

@@ -135,13 +135,26 @@ GdprAdmin.configure do |config|
 end
 ```
 
-## Custom Queue
-Requests are processed asynchronously. You can set which queue should be used to schedule the job for processing
-the request using the config `jobs_queue`:
+## Jobs
+Requests are processed asynchronously using ActiveJob.
+
+### Custom Queue
+You can set which queue should be used to schedule the job for processing the request using the config `jobs_queue`:
 
 ```ruby
 GdprAdmin.configure do |config|
   config.jobs_queue = :gdpr_tasks
+end
+```
+
+### Grace Periods
+To allow for cancelling any accidental erasure request, the jobs are scheduled with a configurable grace period.
+By default, erasure requests will wait 4 hours before being executed, while export requests will be executed immediately.
+
+```ruby
+GdprAdmin.configure do |config|
+  config.erasure_grace_period = 1.day
+  config.export_grace_period = 2.minutes
 end
 ```
 

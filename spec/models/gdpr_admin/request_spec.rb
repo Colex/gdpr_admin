@@ -71,16 +71,36 @@ RSpec.describe GdprAdmin::Request, type: :model do
           described_class.new(
             tenant: Organization.create(name: 'Test'),
             requester: AdminUser.create(name: 'Test', email: 'test@admin.com'),
-            request_type: :subject_export,
+            request_type: request_type,
           )
         end
 
-        it 'schedules a RequestProcessorJob' do
-          expect { request.save }.to have_enqueued_job(GdprAdmin::RequestProcessorJob).with(request)
+        context 'when request is an export' do
+          let(:request_type) { :subject_export }
+
+          it 'schedules a RequestProcessorJob' do
+            GdprAdmin.config.export_grace_period = 1.minute
+            Timecop.freeze do
+              expect { request.save }.to have_enqueued_job(GdprAdmin::RequestProcessorJob)
+                .with(request)
+                .on_queue('gdpr_tasks')
+                .at(1.minute.from_now)
+            end
+          end
         end
 
-        it 'enqueues RequestProcessorJob in the configured queue' do
-          expect { request.save }.to have_enqueued_job.on_queue('gdpr_tasks')
+        context 'when request is an erasure' do
+          let(:request_type) { :erase_all }
+
+          it 'schedules a RequestProcessorJob' do
+            GdprAdmin.config.erasure_grace_period = 6.hours
+            Timecop.freeze do
+              expect { request.save }.to have_enqueued_job(GdprAdmin::RequestProcessorJob)
+                .with(request)
+                .on_queue('gdpr_tasks')
+                .at(6.hours.from_now)
+            end
+          end
         end
       end
 
