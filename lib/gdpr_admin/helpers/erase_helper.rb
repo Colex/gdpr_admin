@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../anonymizers/name_anonymizer'
+require_relative '../anonymizers/company_anonymizer'
 require_relative '../anonymizers/contact_anonymizer'
 require_relative '../anonymizers/internet_anonymizer'
 
@@ -8,6 +9,7 @@ module GdprAdmin
   module Helpers
     module EraseHelper
       include Anonymizers::NameAnonymizer
+      include Anonymizers::CompanyAnonymizer
       include Anonymizers::ContactAnonymizer
       include Anonymizers::InternetAnonymizer
 
@@ -47,18 +49,27 @@ module GdprAdmin
       # @param fields [Array<Hash>] The fields to erase
       # @param base_fields [Hash] The fields to update on the record together with the erased fields
       def erase_fields(record, fields, base_fields = {})
-        new_data = fields.inject(base_fields) do |res, curr|
-          next res if record[curr[:field]].nil?
-
-          res.merge(
-            curr[:field] => call_method(curr[:method], record, record[curr[:seed] || curr[:field]]),
-          )
+        new_data = fields.inject(base_fields) do |changes, curr|
+          changes.merge(curr[:field] => value_for_field(record, curr))
         end
         record.update_columns(new_data)
       end
 
+      def value_for_field(record, field)
+        field_name = field[:field]
+        value = record[field_name]
+        return value if value.nil?
+
+        seed = record[field[:seed] || field_name]
+        call_method(field[:method], record, field_name, seed)
+      end
+
       def nillify
         nil
+      end
+
+      def skip(record, field)
+        record[field]
       end
 
       def with_seed(seed)
@@ -68,14 +79,14 @@ module GdprAdmin
 
       private
 
-      def call_method(erase_method, record, seed)
+      def call_method(erase_method, record, field, seed)
         return if erase_method.nil?
 
         erase_method = method(erase_method) if erase_method.is_a?(Symbol)
 
         arity = erase_method.arity
         with_seed(seed) do
-          erase_method.call(*[record, seed].take(arity))
+          erase_method.call(*[record, field, seed].take(arity))
         end
       end
     end

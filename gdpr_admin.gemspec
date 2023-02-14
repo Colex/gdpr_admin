@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rails', '>= 6.1.7'
 
+  spec.add_development_dependency 'faker', '~> 3.1.1'
   spec.add_development_dependency 'rspec-rails', '~> 6.0.1'
   spec.add_development_dependency 'rubocop', '~> 1.45.1'
   spec.add_development_dependency 'rubocop-performance', '~> 1.11.5'

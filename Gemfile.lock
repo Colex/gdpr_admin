@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gdpr_admin (0.1.2)
+    gdpr_admin (1.1.0)
       rails (>= 6.1.7)
 
 GEM
@@ -83,6 +83,8 @@ GEM
     diff-lcs (1.5.0)
     docile (1.4.0)
     erubi (1.12.0)
+    faker (3.1.1)
+      i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -221,6 +223,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tenant
+  faker (~> 3.1.1)
   gdpr_admin!
   rspec-rails (~> 6.0.1)
   rubocop (~> 1.45.1)

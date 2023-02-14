@@ -12,7 +12,7 @@ Layout/FirstHashElementIndentation:
 Metrics/AbcSize:
   Enabled: true
   Exclude:
-    - spec/dummy/db/seeds.rb
+    - spec/dummy/db/**/*.rb
 Metrics/BlockLength:
   Enabled: true
   Exclude:

@@ -1,0 +1,65 @@
+jerry:
+  organization: starfox
+  first_name: Jerry
+  last_name: Seinfeld
+  gender: male
+  company: "Comedians, Inc."
+  job_title: Comedian
+  email: jerry.seinfeld@comedians.com
+  phone_number: 212-555-1212
+  street_address1: 129 West 81st Street
+  city: New York
+  state: NY
+  zip: 10024
+  country: USA
+  country_code2: US
+  country_code3: USA
+kramer:
+  organization: starfox
+  first_name: Cosmo
+  last_name: Kramer
+  gender: male
+  company: Unemployed
+  job_title: Unemployed
+  email: cosmo.kramer@gmail.com
+  phone_number: 212-321-5672
+  street_address1: 64 West 80st Street
+  street_address2: Apt 3A
+  city: New York
+  state: NY
+  zip: 10025
+  country: USA
+  country_code2: US
+  country_code3: USA
+george:
+  organization: starfox
+  first_name: George
+  last_name: Costanza
+  gender: male
+  company: Rick Bahr Properties
+  job_title: Real Estate Agent
+  email: george@rickbahr.com
+  phone_number: 324-689-2222
+  street_address1: 23 East 80st Street
+  street_address2: Office 2
+  city: New Jersey
+  state: NJ
+  zip: 10012
+  country: USA
+  country_code2: US
+  country_code3: USA
+hank:
+  organization: reachdesk
+  first_name: Hank
+  last_name: Moody
+  company: Moody's Plumbing
+  job_title: Plumber
+  email: hank@moody.com
+  phone_number: 213-231-2313
+  street_address1: 78 East 2st Street
+  city: New York
+  state: NY
+  zip: 10018
+  country: USA
+  country_code2: US
+  country_code3: USA
