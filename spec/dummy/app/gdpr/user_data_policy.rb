@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 class UserDataPolicy < GdprAdmin::ApplicationDataPolicy
+  FIELDS = [
+    { field: :email, method: ->(user) { "anonymized.user#{user.id}@company.org" } },
+    { field: :first_name, method: -> { 'Anonymized' } },
+    { field: :last_name, method: ->(user) { "User #{user.id}" } },
+    { field: :password_digest, method: :anonymize_password },
+  ].freeze
+
   def scope
     User.where(updated_at: ...request.data_older_than)
   end
 
   def erase(user)
-    user.update_columns(
-      email: "anonymized.user#{user.id}@company.org",
-      first_name: 'Anonymized',
-      last_name: "User #{user.id}",
-      password_digest: '654321',
-    )
+    erase_fields(user, FIELDS, { anonymized_at: Time.zone.now })
   end
 end

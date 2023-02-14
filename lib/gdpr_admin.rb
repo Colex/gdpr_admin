@@ -4,8 +4,13 @@ require 'gdpr_admin/version'
 require 'gdpr_admin/engine'
 require 'gdpr_admin/configuration'
 require 'gdpr_admin/skip_data_policy_error'
+require 'gdpr_admin/helpers/erase_helper'
 require 'gdpr_admin/application_data_policy'
 require 'gdpr_admin/tenant_adapters/acts_as_tenant_adapter'
+
+begin
+  require 'faker'
+rescue LoadError; end # rubocop:disable Lint/SuppressedException
 
 module GdprAdmin
   def self.configure

@@ -3,3 +3,4 @@ request_a:
   requester: kazooei
   request_type: erase_all
   status: pending
+  data_older_than: <%= 1.day.from_now %>

@@ -17,30 +17,33 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
           data_older_than: Time.new(2023, 2, 15),
         )
       end
+      let(:anonymization_time) { Time.utc(2023, 2, 1, 0, 20) }
 
       it 'anonymizes all users in organization older than given date' do
-        job.perform(request)
+        Timecop.freeze(anonymization_time) do
+          job.perform(request)
+        end
         expect(organizations(:beatles).users.to_a).to contain_exactly(
           have_attributes(
             id: users(:john).id,
             first_name: 'John',
             last_name: 'Lennon',
             email: 'john.lennon@thebeatles.com',
-            password_digest: 'john123',
+            anonymized_at: nil,
           ),
           have_attributes(
             id: users(:paul).id,
             first_name: 'Anonymized',
             last_name: "User #{users(:paul).id}",
             email: "anonymized.user#{users(:paul).id}@company.org",
-            password_digest: '654321',
+            anonymized_at: anonymization_time,
           ),
           have_attributes(
             id: users(:george).id,
             first_name: 'Anonymized',
             last_name: "User #{users(:george).id}",
             email: "anonymized.user#{users(:george).id}@company.org",
-            password_digest: '654321',
+            anonymized_at: anonymization_time,
           ),
         )
       end

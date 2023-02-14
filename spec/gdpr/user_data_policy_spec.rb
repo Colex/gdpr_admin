@@ -38,8 +38,16 @@ RSpec.describe UserDataPolicy, type: :data_policy do
         first_name: 'Anonymized',
         last_name: "User #{user.id}",
         email: "anonymized.user#{user.id}@company.org",
-        password_digest: a_string_matching(/(?!123456)/),
       )
+    end
+
+    it 'generates a new password' do
+      expect { policy.erase(user) }.to(change { user.reload[:password_digest] })
+    end
+
+    it 'updates the anonymized_at timestamp' do
+      policy.erase(user)
+      expect(user.reload.anonymized_at).to be_within(5.seconds).of(Time.zone.now)
     end
   end
 end
