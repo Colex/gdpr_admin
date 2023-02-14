@@ -2,7 +2,7 @@
 
 module GdprAdmin
   class Configuration
-    attr_accessor :tenant_class, :requester_class, :data_policies_path
+    attr_accessor :tenant_class, :requester_class, :data_policies_path, :jobs_queue
     attr_writer :tenant_adapter
 
     def initialize
@@ -10,6 +10,7 @@ module GdprAdmin
       @requester_class = 'AdminUser'
       @tenant_adapter = TenantAdapters::ActsAsTenantAdapter.new
       @data_policies_path = Rails.root.join('app', 'gdpr')
+      @jobs_queue = :default
     end
 
     def tenant_adapter

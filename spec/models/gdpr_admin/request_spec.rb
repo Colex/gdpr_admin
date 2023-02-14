@@ -78,6 +78,10 @@ RSpec.describe GdprAdmin::Request, type: :model do
         it 'schedules a RequestProcessorJob' do
           expect { request.save }.to have_enqueued_job(GdprAdmin::RequestProcessorJob).with(request)
         end
+
+        it 'enqueues RequestProcessorJob in the configured queue' do
+          expect { request.save }.to have_enqueued_job.on_queue('gdpr_tasks')
+        end
       end
 
       context 'when request is invalid' do

@@ -135,5 +135,15 @@ GdprAdmin.configure do |config|
 end
 ```
 
+## Custom Queue
+Requests are processed asynchronously. You can set which queue should be used to schedule the job for processing
+the request using the config `jobs_queue`:
+
+```ruby
+GdprAdmin.configure do |config|
+  config.jobs_queue = :gdpr_tasks
+end
+```
+
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
