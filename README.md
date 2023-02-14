@@ -1,5 +1,14 @@
-# GDPR Admin
-Rails engine for processing GDPR processes. GDPR Admin offers a simple interface for defining strategies for automating the process of data access and data removal as required by data privacy regulations like GDPR.
+<p align="center">
+  <a href="http://github.com/Colex/gdpr_admin" target="blank"><img src="https://i.ibb.co/mJwpsFY/logo.png" width="120" alt="GDPR and Ruby logo" /></a>
+
+  # GDPR Admin
+
+  [![Build Status](https://github.com/Colex/gdpr_admin/actions/workflows/build.yml/badge.svg)](https://github.com/Colex/gdpr_admin/actions/workflows/build.yml)
+  [![Code Climate](https://codeclimate.com/github/Colex/gdpr_admin.svg)](https://codeclimate.com/github/Colex/gdpr_admin)
+  [![Gem Version](https://badge.fury.io/rb/gdpr_admin.svg)](http://badge.fury.io/rb/gdpr_admin)
+
+  Rails engine for processing GDPR processes. GDPR Admin offers a simple interface for defining strategies for automating the process of data access and data removal as required by data privacy regulations like GDPR.
+</p>
 
 ## Installation
 Add this line to your application's Gemfile:
