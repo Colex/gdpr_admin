@@ -158,5 +158,18 @@ GdprAdmin.configure do |config|
 end
 ```
 
+## Other Configurations
+
+### Data Policies Directory
+By default, GDPR Admin will assume that your data policies are defined in `app/gdpr`. If you wish to have them
+in a different place, you can change the option `data_policies_path`:
+
+```ruby
+GdprAdmin.configure do |config|
+  # Change data policies path to be within the models directory (app/models/gdpr)
+  config.data_policies_path = Rails.root.join('app', 'models', 'gdpr')
+end
+```
+
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
