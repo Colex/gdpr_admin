@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gdpr_admin (0.1.0)
+    gdpr_admin (0.1.2)
       rails (>= 6.1.7)
 
 GEM

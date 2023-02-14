@@ -33,7 +33,7 @@ RSpec.describe GdprAdmin, type: :lib do
     end
 
     it 'loads data policies' do
-      described_class.load_data_policies
+      described_class.load_data_policies(force: true)
       expect(GdprAdmin::ApplicationDataPolicy.descendants).to include(MockDataPolicy)
     end
   end

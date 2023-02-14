@@ -21,8 +21,8 @@ module GdprAdmin
     @config ||= Configuration.new
   end
 
-  def self.load_data_policies
-    return if Rails.application.config.eager_load
+  def self.load_data_policies(force: false)
+    return if Rails.application.config.eager_load && !force
 
     Dir.glob(Pathname.new(config.data_policies_path).join('**', '*.rb')).each do |file|
       require_dependency file
