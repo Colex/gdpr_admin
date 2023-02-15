@@ -67,11 +67,11 @@ GdprAdmin::Request.create!(
 
 Creating a request will automatically enqueue the request to be processed in 4 hours - this gives time to cancel an accidental request. You can configure this grace period as desired.
 
-## Anonymization Helpers
+### Anonymization Helpers
 A set of helper methods are available to make the anonymization even simpler. These are not mandatory, but can help you
 keep your code cleaner and, better, write less code.
 
-### erase_fields
+#### `erase_fields`
 
 ```ruby
 erase_fields(record, fields, base_changes = {})
@@ -111,12 +111,23 @@ same anonymized value. _(note: different values may also yield the same value)_
 
 To use the built-in anonymizer functions, you need to install the gem `faker`.
 
-## Multi-Tenancy
+## Configuration
+Configure GDPR Admin in a initializer file `config/initializers/gdpr_admin.rb`. The configuration should be done within
+the block of `GdprAdmin.configure(&block)`:
+
+```ruby
+# config/initializers/gdpr_admin/rb
+GdprAdmin.configure do |config|
+  # GDPR Admin configuration here...
+end
+```
+
+### Multi-Tenancy
 GDPR Admin is built maily for B2B SaaS services and it assumes that the service may have multiple tenants. The
 `GDPR::Request` object always expects a `tenant` to be provided. When processing the request, data will be automatically
 segregated using the tenant adapter.
 
-### Tenant Class
+#### Tenant Class
 By default, GDPR Admin will assume that the tenant class is `Organization`. You can change that by setting the
 `tenant_class` in the config.
 
@@ -126,7 +137,7 @@ GdprAdmin.configure do |config|
 end
 ```
 
-### ActsAsTenant Adapter
+#### ActsAsTenant Adapter
 You can segregated the process to a tenant using `ActsAsTenant` gem:
 
 ```ruby
@@ -135,10 +146,10 @@ GdprAdmin.configure do |config|
 end
 ```
 
-## Jobs
+### Jobs
 Requests are processed asynchronously using ActiveJob.
 
-### Custom Queue
+#### Custom Queue
 You can set which queue should be used to schedule the job for processing the request using the config `jobs_queue`:
 
 ```ruby
@@ -147,7 +158,7 @@ GdprAdmin.configure do |config|
 end
 ```
 
-### Grace Periods
+#### Grace Periods
 To allow for cancelling any accidental erasure request, the jobs are scheduled with a configurable grace period.
 By default, erasure requests will wait 4 hours before being executed, while export requests will be executed immediately.
 
@@ -158,9 +169,9 @@ GdprAdmin.configure do |config|
 end
 ```
 
-## Other Configurations
+### Other Configurations
 
-### Data Policies Directory
+#### Data Policies Directory
 By default, GDPR Admin will assume that your data policies are defined in `app/gdpr`. If you wish to have them
 in a different place, you can change the option `data_policies_path`:
 
