@@ -34,8 +34,10 @@ RSpec.describe ContactDataPolicy, type: :data_policy do
       policy.erase(contact)
       expect(contact.reload).to have_attributes(
         organization: organizations(:beatles),
+        name: 'Anamaria Keeling Sr.',
         first_name: 'Deshawn',
         last_name: 'Schamberger',
+        gender: 'male',
         company: 'Konopelski, Dooley and Wintheiser',
         job_title: nil,
         email: 'helaine.wolf@sporer.info',

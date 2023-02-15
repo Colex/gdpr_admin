@@ -84,23 +84,25 @@ is updated. See the example below:
 
 ```ruby
 class ContactDataPolicy < GdprAdmin::ApplicationDataPolicy
-  FIELDS = [
-    { field: :first_name, method: :anonymize_first_name },
-    { field: :last_name, method: :anonymize_last_name },
-    { field: :gender, method: :skip },
-    {
-      field: :email,
-      method: lambda { |contact|
-        domain = contact.email[/@.*/]
-        "anonymous.contact#{contact.id}#{domain}"
+  def fields
+    [
+      { field: :first_name, method: :anonymize_first_name },
+      { field: :last_name, method: :anonymize_last_name },
+      { field: :gender, method: :skip },
+      {
+        field: :email,
+        method: lambda { |contact|
+          domain = contact.email[/@.*/]
+          "anonymous.contact#{contact.id}#{domain}"
+        },
       },
-    },
-    { field: :street_address, method: :nilify },
-    { field: :city, method: :anonymize_city, seed: :id },
-  ]
+      { field: :street_address, method: :nilify },
+      { field: :city, method: :anonymize_city, seed: :id },
+    ]
+  end
 
   def erase(contact)
-    erase_fields(contact, FIELDS, { anonymized_at: Time.zone.now })
+    erase_fields(contact, fields, { anonymized_at: Time.zone.now })
   end
 end
 ```
@@ -110,6 +112,68 @@ the seed. That means that, when anonymization with the same anonymizer function,
 same anonymized value. _(note: different values may also yield the same value)_
 
 To use the built-in anonymizer functions, you need to install the gem `faker`.
+
+## PaperTrail
+GDPR Admin provides a set of tools to keep your PaperTrail GDPR Compliant.
+
+### PaperTrail Data Privacy
+By default, PaperTrail versions will not be anonymized. You may extend the default `PaperTrail::VersionDataPrivacy`
+with your own scope. If you track custom fields with your versions (e.g. `ip`), then you can also define an anonymizer
+for those here:
+
+```ruby
+# app/gdpr/paper_trail/version_data_privacy.rb
+
+module PaperTrail
+  class VersionDataPolicy < GdprAdmin::PaperTrail::VersionDataPolicy
+    def fields
+      [
+        { field: 'ip', method: :anonymize_ip },
+      ]
+    end
+
+    def scope
+      return PaperTrail::Version.where(updated_at: ...request.data_older_than) if request.erase_timeframe?
+
+      PaperTrail::Version.none
+    end
+  end
+end
+```
+
+#### `PaperTrail::VersionDataPolicy#erase`
+**NOTE:** this method only support JSON format for `object` and, optionally, `object_changes`. If you need a different
+format, you will need to re-implement this method as desired.
+
+`erase(version, item_fields = nil)`
+
+The `erase` method will, by default, anonymize the data within `object` and `object_changes` (and whichever fields are
+defined in the `#fields` method). It will choose which fields to anonymize the `object` and `object_changes` and which
+anonymization methods by finding the `item`'s data policy and loading the fields from its `fields` method. Unless
+`item_fields` is defined, in which case it will be used instead.
+
+For example, if you have a `item_type` set to `User`, it will try to find the `UserDataPrivacy`. If you want to use a
+different class for a `item_type`, you must define a `data_policy_class` in the model.
+
+```ruby
+class User < ApplicationRecord
+  def data_policy_class
+    PersonDataPolicy
+  end
+end
+```
+
+If you'd like to just namespace all policies, then you can define `data_policy_prefix` in the `ApplicationRecord`:
+
+```ruby
+class ApplicationRecord < ActiveRecord::Base
+  def data_policy_prefix
+    'Gdpr::'
+  end
+end
+
+# Now, user should be defined in `Gdpr::UserDataPolicy`
+```
 
 ### PaperTrail Helpers
 When using the method `erase_fields`, no PaperTrail versions will be created in the database. GDPR Admin offer other

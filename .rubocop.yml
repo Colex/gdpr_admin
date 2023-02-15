@@ -20,6 +20,7 @@ Metrics/BlockLength:
     - spec/**/*_spec.rb
 Metrics/MethodLength:
   Enabled: true
+  Max: 20
   Exclude:
     - db/**/*
     - spec/dummy/db/**/*

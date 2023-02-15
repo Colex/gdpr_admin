@@ -1,0 +1,36 @@
+beatles1:
+  item: beatles
+  item_type: Organization
+  event: create
+  ip: "66.77.88.99"
+  object:
+    name: The Beatles
+  object_changes:
+    name: [null, "The Beatles"]
+jerry1:
+  item: jerry
+  item_type: Contact
+  event: update
+  ip: "154.234.12.9"
+  object:
+    name: Jerry Seinfeld
+    first_name: Jerry
+    last_name: Seinfeld
+    gender: male
+    company: "Comedians, Inc."
+    job_title: Comedian
+    email: jerry.seinfeld@comedians.com
+    phone_number: 212-555-1212
+    street_address1: 129 West 81st Street
+    city: New York
+    state: NY
+    zip: "10024"
+    country: USA
+    country_code2: US
+    country_code3: USA
+  object_changes:
+    name: ["Elaine Benes", "Jerry Seinfeld"]
+    first_name: ["Elaine", "Jerry"]
+    last_name: [null, "Seinfeld"]
+    gender: ["female", "male"]
+    job_title: ["Unemployed", "Comedian"]

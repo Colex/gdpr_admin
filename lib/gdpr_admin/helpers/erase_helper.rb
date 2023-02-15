@@ -1,19 +1,13 @@
 # frozen_string_literal: true
 
 require_relative './paper_trail_helper'
-require_relative '../anonymizers/name_anonymizer'
-require_relative '../anonymizers/company_anonymizer'
-require_relative '../anonymizers/contact_anonymizer'
-require_relative '../anonymizers/internet_anonymizer'
+require_relative './field_anonymizer_helper'
 
 module GdprAdmin
   module Helpers
     module EraseHelper
+      include FieldAnonymizerHelper
       include PaperTrailHelper
-      include Anonymizers::NameAnonymizer
-      include Anonymizers::CompanyAnonymizer
-      include Anonymizers::ContactAnonymizer
-      include Anonymizers::InternetAnonymizer
 
       ##
       # Erases the given fields on the given record using the method given.
@@ -27,7 +21,7 @@ module GdprAdmin
       #     { field: :email, method: :anonymize_email },
       #     { field: :password_digest, method: :anonymize_password },
       #     { field: :phone_number, method: ->(record) { record.phone_number.split('').shuffle.join } },
-      #     { field: :address, method: :nillify },
+      #     { field: :address, method: :nilify },
       #   ]
       # ```
       #
@@ -52,45 +46,10 @@ module GdprAdmin
       # @param base_fields [Hash] The fields to update on the record together with the erased fields
       def erase_fields(record, fields, base_fields = {})
         new_data = fields.inject(base_fields) do |changes, curr|
-          changes.merge(curr[:field] => value_for_field(record, curr))
+          changes.merge(curr[:field] => anonymize_field(record, curr))
         end
         without_paper_trail do
           record.update_columns(new_data)
-        end
-      end
-
-      def value_for_field(record, field)
-        field_name = field[:field]
-        value = record[field_name]
-        return value if value.nil?
-
-        seed = record[field[:seed] || field_name]
-        call_method(field[:method], record, field_name, seed)
-      end
-
-      def nillify
-        nil
-      end
-
-      def skip(record, field)
-        record[field]
-      end
-
-      def with_seed(seed)
-        Faker::Config.random = Random.new(seed.to_s.chars.sum(&:ord)) if defined?(Faker)
-        yield
-      end
-
-      private
-
-      def call_method(erase_method, record, field, seed)
-        return if erase_method.nil?
-
-        erase_method = method(erase_method) if erase_method.is_a?(Symbol)
-
-        arity = erase_method.arity
-        with_seed(seed) do
-          erase_method.call(*[record, field, seed].take(arity))
         end
       end
     end
