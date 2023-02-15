@@ -111,6 +111,23 @@ same anonymized value. _(note: different values may also yield the same value)_
 
 To use the built-in anonymizer functions, you need to install the gem `faker`.
 
+### PaperTrail Helpers
+When using the method `erase_fields`, no PaperTrail versions will be created in the database. GDPR Admin offer other
+helper methods to deal with PaperTrail. (If you are not using `paper_trail`, this section may not be relevant)
+
+#### `without_paper_trail`
+
+Given a block, this method will execute it in a context where PaperTrail is disabled, so no versions are created:
+```ruby
+def erase(contact)
+  without_paper_trail do
+    contact.update!(first_name: 'John', last_name: 'Doe')
+  end
+end
+```
+
+As mentioned above, this is **not** required when using `erase_fields` as it is the default behavior.
+
 ## Configuration
 Configure GDPR Admin in a initializer file `config/initializers/gdpr_admin.rb`. The configuration should be done within
 the block of `GdprAdmin.configure(&block)`:

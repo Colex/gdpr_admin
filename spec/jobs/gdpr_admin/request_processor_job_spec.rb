@@ -166,6 +166,10 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
         expect(request.reload.status).to eql('completed')
       end
 
+      it 'does not create new paper trail versions' do
+        expect { job.perform(request) }.not_to change(PaperTrail::Version, :count)
+      end
+
       context 'when request fails to process' do
         before do
           allow_any_instance_of(UserDataPolicy).to receive(:erase).and_raise(StandardError) # rubocop:disable RSpec/AnyInstance

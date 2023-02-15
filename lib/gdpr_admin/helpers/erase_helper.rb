@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative './paper_trail_helper'
 require_relative '../anonymizers/name_anonymizer'
 require_relative '../anonymizers/company_anonymizer'
 require_relative '../anonymizers/contact_anonymizer'
@@ -8,6 +9,7 @@ require_relative '../anonymizers/internet_anonymizer'
 module GdprAdmin
   module Helpers
     module EraseHelper
+      include PaperTrailHelper
       include Anonymizers::NameAnonymizer
       include Anonymizers::CompanyAnonymizer
       include Anonymizers::ContactAnonymizer
@@ -52,7 +54,9 @@ module GdprAdmin
         new_data = fields.inject(base_fields) do |changes, curr|
           changes.merge(curr[:field] => value_for_field(record, curr))
         end
-        record.update_columns(new_data)
+        without_paper_trail do
+          record.update_columns(new_data)
+        end
       end
 
       def value_for_field(record, field)
