@@ -5,6 +5,13 @@ module GdprAdmin
     belongs_to :tenant, class_name: GdprAdmin.config.tenant_class
     belongs_to :requester, class_name: GdprAdmin.config.requester_class
 
+    VALID_STATUS_TRANSITIONS = {
+      pending: %i[processing],
+      processing: %i[completed failed],
+      completed: [],
+      failed: %i[pending],
+    }.freeze
+
     enum status: {
       pending: 'pending',
       processing: 'processing',
@@ -22,6 +29,8 @@ module GdprAdmin
     before_validation :set_default_data_older_than!
     after_create_commit :schedule_processing
 
+    validate :valid_status_transition?
+
     def process!
       GdprAdmin.load_data_policies
       with_lock { processing! }
@@ -30,7 +39,7 @@ module GdprAdmin
         completed!
       end
     rescue StandardError
-      failed!
+      with_lock { failed! }
       raise
     end
 
@@ -66,6 +75,14 @@ module GdprAdmin
 
     def set_default_data_older_than!
       self.data_older_than ||= Time.zone.now
+    end
+
+    def valid_status_transition?
+      return true if status_was.nil? || status.nil? || status_was == status
+      return true if VALID_STATUS_TRANSITIONS[status_was.to_sym].include?(status.to_sym)
+
+      errors.add(:status, :invalid_transition)
+      false
     end
   end
 end
