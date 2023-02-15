@@ -2,7 +2,7 @@
 
 module GdprAdmin
   class RequestProcessorJob < ApplicationJob
-    queue_as GdprAdmin.config.jobs_queue
+    queue_as GdprAdmin.config.default_job_queue
 
     def perform(task)
       task.process!

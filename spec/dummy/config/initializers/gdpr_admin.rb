@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 GdprAdmin.configure do |config|
-  config.jobs_queue = :gdpr_tasks
+  config.default_job_queue = :gdpr_tasks
 end

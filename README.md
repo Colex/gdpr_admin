@@ -231,11 +231,11 @@ end
 Requests are processed asynchronously using ActiveJob.
 
 #### Custom Queue
-You can set which queue should be used to schedule the job for processing the request using the config `jobs_queue`:
+You can set which queue should be used to schedule the job for processing the request using the config `default_job_queue`:
 
 ```ruby
 GdprAdmin.configure do |config|
-  config.jobs_queue = :gdpr_tasks
+  config.default_job_queue = :gdpr_tasks
 end
 ```
 
