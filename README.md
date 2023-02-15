@@ -60,7 +60,7 @@ Once you have all your data policies defined, create a `GdprAdmin::Request` to p
 GdprAdmin::Request.create!(
   tenant: current_tenant,
   requester: current_admin_user,
-  request_type: 'erase_all',
+  request_type: 'erase_tenant',
   data_older_than: 1.month.ago, # Optional: by default, it will be todays date
 )
 ```
@@ -133,7 +133,7 @@ module PaperTrail
     end
 
     def scope
-      return PaperTrail::Version.where(updated_at: ...request.data_older_than) if request.erase_timeframe?
+      return PaperTrail::Version.where(updated_at: ...request.data_older_than) if request.erase_data?
 
       PaperTrail::Version.none
     end

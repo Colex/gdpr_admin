@@ -11,7 +11,7 @@ RSpec.describe UserDataPolicy, type: :data_policy do
     GdprAdmin::Request.create!(
       tenant: organizations(:beatles),
       requester: admin_users(:admin_user_a),
-      request_type: 'erase_timeframe',
+      request_type: 'erase_data',
       data_older_than: data_older_than,
     )
   end

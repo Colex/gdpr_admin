@@ -6,8 +6,8 @@ RSpec.describe GdprAdmin::Request, type: :model do
   subject(:request) { described_class.new }
 
   describe '#erase?' do
-    it 'returns true for erase_all?' do
-      request.request_type = :erase_all
+    it 'returns true for erase_tenant?' do
+      request.request_type = :erase_tenant
 
       expect(request.erase?).to eq(true)
     end
@@ -18,8 +18,8 @@ RSpec.describe GdprAdmin::Request, type: :model do
       expect(request.erase?).to eq(true)
     end
 
-    it 'returns true for erase_timeframe?' do
-      request.request_type = :erase_timeframe
+    it 'returns true for erase_data?' do
+      request.request_type = :erase_data
 
       expect(request.erase?).to eq(true)
     end
@@ -38,8 +38,8 @@ RSpec.describe GdprAdmin::Request, type: :model do
       expect(request.export?).to eq(true)
     end
 
-    it 'returns false for erase_all?' do
-      request.request_type = :erase_all
+    it 'returns false for erase_tenant?' do
+      request.request_type = :erase_tenant
 
       expect(request.export?).to eq(false)
     end
@@ -50,8 +50,8 @@ RSpec.describe GdprAdmin::Request, type: :model do
       expect(request.export?).to eq(false)
     end
 
-    it 'returns false for erase_timeframe?' do
-      request.request_type = :erase_timeframe
+    it 'returns false for erase_data?' do
+      request.request_type = :erase_data
 
       expect(request.export?).to eq(false)
     end
@@ -90,7 +90,7 @@ RSpec.describe GdprAdmin::Request, type: :model do
         end
 
         context 'when request is an erasure' do
-          let(:request_type) { :erase_all }
+          let(:request_type) { :erase_tenant }
 
           it 'schedules a RequestProcessorJob' do
             GdprAdmin.config.erasure_grace_period = 6.hours
