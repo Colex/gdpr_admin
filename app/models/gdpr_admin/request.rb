@@ -28,6 +28,7 @@ module GdprAdmin
     before_validation :set_default_data_older_than!
     after_create_commit :schedule_processing
 
+    validates :status, presence: true
     validate :valid_status_transition?
 
     def process!

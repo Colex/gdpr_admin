@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe GdprAdmin::Request, type: :model do
+  fixtures :organizations
+
   subject(:request) { described_class.new }
 
   describe '#erase?' do
@@ -97,6 +99,105 @@ RSpec.describe GdprAdmin::Request, type: :model do
 
         it 'does not schedule a RequestProcessorJob' do
           expect { request.save }.not_to have_enqueued_job(GdprAdmin::RequestProcessorJob)
+        end
+      end
+    end
+  end
+
+  describe '#valid?' do
+    context 'when transitioning status' do
+      subject(:request) do
+        described_class.create(
+          tenant: organizations(:beatles),
+          request_type: :erase_data,
+        )
+      end
+
+      before do
+        request.update_columns(status: status)
+      end
+
+      context 'when status is pending' do
+        let(:status) { :pending }
+
+        it 'can transition to processing' do
+          request.status = :processing
+          expect(request.valid?).to be(true)
+        end
+
+        it 'cannot transition to completed' do
+          request.status = :completed
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to failed' do
+          request.status = :failed
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+      end
+
+      context 'when status is processing' do
+        let(:status) { :processing }
+
+        it 'cannot transition to pending' do
+          request.status = :pending
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'can transition to completed' do
+          request.status = :completed
+          expect(request.valid?).to be(true)
+        end
+
+        it 'can transition to failed' do
+          request.status = :failed
+          expect(request.valid?).to be(true)
+        end
+      end
+
+      context 'when status is completed' do
+        let(:status) { :completed }
+
+        it 'cannot transition to pending' do
+          request.status = :pending
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to processing' do
+          request.status = :processing
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to failed' do
+          request.status = :failed
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+      end
+
+      context 'when status is failed' do
+        let(:status) { :failed }
+
+        it 'can transition to pending' do
+          request.status = :pending
+          expect(request.valid?).to be(true)
+        end
+
+        it 'cannot transition to processing' do
+          request.status = :processing
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to completed' do
+          request.status = :completed
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
         end
       end
     end
