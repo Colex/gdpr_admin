@@ -68,6 +68,26 @@ GdprAdmin::Request.create!(
 
 Creating a request will automatically enqueue the request to be processed in 4 hours - this gives time to cancel an accidental request. You can configure this grace period as desired.
 
+### Scope Helpers
+Helpers to be used within the `#scope` method.
+
+#### `scope_by_date`
+
+```ruby
+scope_by_date(scope, field = :updated_at)
+```
+
+Automatically scopes the data using the `updated_at` column to match the GDPR Request. You can use a different column by providing
+a second argument.
+
+```ruby
+class ContactDataPolicy < GdprAdmin::ApplicationDataPolicy
+  def scope
+    scope_by_date(Contact)
+  end
+end
+```
+
 ### Anonymization Helpers
 A set of helper methods are available to make the anonymization even simpler. These are not mandatory, but can help you
 keep your code cleaner and, better, write less code.

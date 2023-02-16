@@ -3,6 +3,7 @@
 module GdprAdmin
   class ApplicationDataPolicy
     include Helpers::EraseHelper
+    include Helpers::ScopeHelper
 
     def initialize(request)
       @request = request

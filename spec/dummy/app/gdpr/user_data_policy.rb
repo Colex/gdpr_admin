@@ -11,7 +11,7 @@ class UserDataPolicy < GdprAdmin::ApplicationDataPolicy
   end
 
   def scope
-    User.where(updated_at: ...request.data_older_than)
+    scope_by_date(User)
   end
 
   def erase(user)
