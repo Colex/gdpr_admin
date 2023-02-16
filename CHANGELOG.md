@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/Colex/gdpr_admin/compare/v1.1.0...v1.2.0) (2023-02-16)
+
+
+### Features
+
+* add default strategy/data policy for paper_trail versions ([2855707](https://www.github.com/Colex/gdpr_admin/commit/2855707b140058b4d114b36c39c4cbb2ec74e08a))
+* add extra helper methods for data anonymization ([1e09d78](https://www.github.com/Colex/gdpr_admin/commit/1e09d788d8dc9f4b4b4b22189cdc36a8d0444b6e))
+* add job for processing data retention policies ([e92ba61](https://www.github.com/Colex/gdpr_admin/commit/e92ba61c5bb9a3e92397ededc94c233ab0dab74c))
+* add option for choosing which queue to use for jobs ([1b1b222](https://www.github.com/Colex/gdpr_admin/commit/1b1b22247a6b2166cd400c5e81b0952eaf1438ca))
+* add option to set grace period for erasure and export requests ([389e828](https://www.github.com/Colex/gdpr_admin/commit/389e828efd808de8a28e924321cca2564fc59286))
+* add support for custom data retention policies ([9f4c78f](https://www.github.com/Colex/gdpr_admin/commit/9f4c78fb7592b7977dddc2d46fadcfeb4966b349))
+* do not create new PaperTrail versions when anonymizing fields ([82a5529](https://www.github.com/Colex/gdpr_admin/commit/82a55290b9b0c4b69c41538d76f871699c1bc67f))
+* simplify request types ([e3cfeba](https://www.github.com/Colex/gdpr_admin/commit/e3cfeba031ed723342af86d31ce7f5034af5b156))
+
+
+### Bug Fixes
+
+* properly validate status transition of gdpr requests ([1a605b4](https://www.github.com/Colex/gdpr_admin/commit/1a605b47d8593ee37dc04e65d4c35729866b5c05))
+
 ## [1.1.0](https://www.github.com/Colex/gdpr_admin/compare/v1.0.0...v1.1.0) (2023-02-14)
 
 
