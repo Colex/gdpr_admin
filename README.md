@@ -6,6 +6,7 @@
 
 [![Build Status](https://github.com/Colex/gdpr_admin/actions/workflows/build.yml/badge.svg)](https://github.com/Colex/gdpr_admin/actions/workflows/build.yml)
 [![Code Climate](https://codeclimate.com/github/Colex/gdpr_admin.svg)](https://codeclimate.com/github/Colex/gdpr_admin)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/00740133ef1f97181ed6/test_coverage)](https://codeclimate.com/github/Colex/gdpr_admin/test_coverage)
 [![Gem Version](https://badge.fury.io/rb/gdpr_admin.svg)](http://badge.fury.io/rb/gdpr_admin)
 
 Rails engine for processing GDPR processes. GDPR Admin offers a simple interface for defining strategies for automating the process of data access and data removal as required by data privacy regulations like GDPR.
