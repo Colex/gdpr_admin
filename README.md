@@ -146,6 +146,28 @@ This method executes the request. This is automatically called by the `GdprAdmin
 Some tenants may have different data retention policies (e.g. some hold Personally identifiable information for 3 months,
 others for 1 month).
 
+### Setup Job
+Run the job `GdprAdmin::DataRetentionPoliciesRunnerJob` periodically to execute your data retention policy (it is recommended
+to run it, at least, once a day).
+
+#### Sidekiq
+You can define a repeating job with `sidekiq-cron`:
+
+```ruby
+Sidekiq::Cron::Job.create(
+  class: SyncOrganizationsContactsJob.to_s,
+  cron: '0 2 * * *',
+  name: 'Sync Organization Contacts',
+  queue: 'cron',
+  active_job: true,
+)
+```
+
+#### DelayedJobs
+```ruby
+GdprAdmin::DataRetentionPoliciesRunnerJob.set(cron: '0 2 * * *', queue: :cron).perform_later
+```
+
 ### Model `GdprAdmin::DataRetentionPolicy`
 
 This model allows you to create a custom data policy for each tenant and automatically run the policy periodically.
@@ -153,7 +175,7 @@ This model allows you to create a custom data policy for each tenant and automat
 ```ruby
 GdprAdmin::DataRetentionPolicy.create!(
   tenant: acme_inc,
-  period_in_days: 30.days,
+  period_in_days: 30,
 )
 ```
 

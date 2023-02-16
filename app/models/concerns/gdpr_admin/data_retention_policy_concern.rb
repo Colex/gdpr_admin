@@ -7,6 +7,8 @@ module GdprAdmin
     included do
       belongs_to :tenant, class_name: GdprAdmin.config.tenant_class
 
+      scope :active, -> { where(active: true) }
+
       validates :active, inclusion: { in: [true, false] }
       validates :period_in_days, numericality: { only_integer: true, greater_than: 0 }
     end
