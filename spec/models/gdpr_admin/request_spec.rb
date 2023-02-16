@@ -6,8 +6,8 @@ RSpec.describe GdprAdmin::Request, type: :model do
   subject(:request) { described_class.new }
 
   describe '#erase?' do
-    it 'returns true for erase_tenant?' do
-      request.request_type = :erase_tenant
+    it 'returns true for erase_data?' do
+      request.request_type = :erase_data
 
       expect(request.erase?).to eq(true)
     end
@@ -18,40 +18,28 @@ RSpec.describe GdprAdmin::Request, type: :model do
       expect(request.erase?).to eq(true)
     end
 
-    it 'returns true for erase_data?' do
-      request.request_type = :erase_data
-
-      expect(request.erase?).to eq(true)
-    end
-
-    it 'returns false for subject_export?' do
-      request.request_type = :subject_export
+    it 'returns false for export_subject?' do
+      request.request_type = :export_subject
 
       expect(request.erase?).to eq(false)
     end
   end
 
   describe '#export?' do
-    it 'returns true for subject_export?' do
-      request.request_type = :subject_export
+    it 'returns true for export_subject?' do
+      request.request_type = :export_subject
 
       expect(request.export?).to eq(true)
     end
 
-    it 'returns false for erase_tenant?' do
-      request.request_type = :erase_tenant
+    it 'returns false for erase_data?' do
+      request.request_type = :erase_data
 
       expect(request.export?).to eq(false)
     end
 
     it 'returns false for erase_subject?' do
       request.request_type = :erase_subject
-
-      expect(request.export?).to eq(false)
-    end
-
-    it 'returns false for erase_data?' do
-      request.request_type = :erase_data
 
       expect(request.export?).to eq(false)
     end
@@ -76,7 +64,7 @@ RSpec.describe GdprAdmin::Request, type: :model do
         end
 
         context 'when request is an export' do
-          let(:request_type) { :subject_export }
+          let(:request_type) { :export_subject }
 
           it 'schedules a RequestProcessorJob' do
             GdprAdmin.config.export_grace_period = 1.minute
@@ -90,7 +78,7 @@ RSpec.describe GdprAdmin::Request, type: :model do
         end
 
         context 'when request is an erasure' do
-          let(:request_type) { :erase_tenant }
+          let(:request_type) { :erase_data }
 
           it 'schedules a RequestProcessorJob' do
             GdprAdmin.config.erasure_grace_period = 6.hours

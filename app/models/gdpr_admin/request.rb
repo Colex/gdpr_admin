@@ -20,10 +20,9 @@ module GdprAdmin
     }
 
     enum request_type: {
-      subject_export: 'subject_export',
-      erase_tenant: 'erase_tenant',
-      erase_subject: 'erase_subject',
+      export_subject: 'export_subject',
       erase_data: 'erase_data',
+      erase_subject: 'erase_subject',
     }
 
     before_validation :set_default_data_older_than!
@@ -44,11 +43,11 @@ module GdprAdmin
     end
 
     def erase?
-      erase_tenant? || erase_subject? || erase_data?
+      erase_data? || erase_subject?
     end
 
     def export?
-      subject_export?
+      export_subject?
     end
 
     def schedule_processing

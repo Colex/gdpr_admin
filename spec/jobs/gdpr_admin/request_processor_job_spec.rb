@@ -13,7 +13,7 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
         GdprAdmin::Request.create(
           tenant: organizations(:beatles),
           requester: admin_users(:admin_user_a),
-          request_type: :erase_tenant,
+          request_type: :erase_data,
           data_older_than: Time.new(2023, 2, 15),
         )
       end

@@ -1,6 +1,6 @@
 request_a:
   tenant: starfox
   requester: kazooei
-  request_type: erase_tenant
+  request_type: erase_data
   status: pending
   data_older_than: <%= 1.day.from_now %>

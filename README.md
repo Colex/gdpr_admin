@@ -60,7 +60,7 @@ Once you have all your data policies defined, create a `GdprAdmin::Request` to p
 GdprAdmin::Request.create!(
   tenant: current_tenant,
   requester: current_admin_user,
-  request_type: 'erase_tenant',
+  request_type: 'erase_data',
   data_older_than: 1.month.ago, # Optional: by default, it will be todays date
 )
 ```
@@ -122,7 +122,7 @@ A GDPR Request (`GdprAdmin::Request`) represents a request to remove a subject's
 GdprAdmin::Request.create!(
   tenant: current_tenant,
   requester: current_admin_user,
-  request_type: 'erase_tenant',
+  request_type: 'erase_data',
   data_older_than: 30.days.ago,
 )
 ```
