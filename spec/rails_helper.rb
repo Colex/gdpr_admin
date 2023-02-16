@@ -41,6 +41,8 @@ end
 
 ActiveJob::Base.queue_adapter = :test
 
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = File.join(File.dirname(__FILE__), 'fixtures')

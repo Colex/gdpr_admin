@@ -113,6 +113,66 @@ same anonymized value. _(note: different values may also yield the same value)_
 
 To use the built-in anonymizer functions, you need to install the gem `faker`.
 
+## GDPR Request
+A GDPR Request (`GdprAdmin::Request`) represents a request to remove a subject's data, tenant's data, or export subject data.
+
+### Model `GdprAdmin::Request`
+
+```ruby
+GdprAdmin::Request.create!(
+  tenant: current_tenant,
+  requester: current_admin_user,
+  request_type: 'erase_tenant',
+  data_older_than: 30.days.ago,
+)
+```
+
+#### `#tenant`
+Defines which tenant is this request attributed to. All requests must be assigned to a Tenant.
+
+#### `#request_type`
+Represents what type of request is being performed. Must be one of:
+- `erase_data`: erase a tenant's data;
+- `erase_subject`: erase a single subject's data in a tenant;
+- `export_subject`: export data about a subject within a tenant;
+
+#### `#data_older_than`
+The request should only affect any data created before than date defined here (e.g. erase anything older than 30 days ago).
+
+#### `#process!`
+This method executes the request. This is automatically called by the `GdprAdmin::RequestProcessorJob`.
+
+## Data Retention Policies
+Some tenants may have different data retention policies (e.g. some hold Personally identifiable information for 3 months,
+others for 1 month).
+
+### Model `GdprAdmin::DataRetentionPolicy`
+
+This model allows you to create a custom data policy for each tenant and automatically run the policy periodically.
+
+```ruby
+GdprAdmin::DataRetentionPolicy.create!(
+  tenant: acme_inc,
+  period_in_days: 30.days,
+)
+```
+
+If you want to have a custom logic for running the data retention policy (e.g. do not run if the organization is deleted),
+then you can add the logic to the method `#should_process?`:
+
+```ruby
+module GdprAdmin
+  class DataRetentionPolicy < GdprAdmin::ApplicationRecord
+    include GdprAdmin::DataRetentionPolicyConcern
+
+    def should_process?
+      tenant.deleted_at.nil?
+    end
+  end
+end
+```
+
+
 ## PaperTrail
 GDPR Admin provides a set of tools to keep your PaperTrail GDPR Compliant.
 

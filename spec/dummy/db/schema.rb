@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_15_184303) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_16_171202) do
   create_table "activity_logs", force: :cascade do |t|
     t.integer "organization_id", null: false
     t.integer "user_id", null: false
@@ -56,9 +56,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_184303) do
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
   end
 
+  create_table "gdpr_admin_data_retention_policies", force: :cascade do |t|
+    t.integer "tenant_id", null: false
+    t.integer "period_in_days", null: false
+    t.boolean "active", default: false, null: false
+    t.datetime "last_run_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tenant_id"], name: "index_gdpr_admin_data_retention_policies_on_tenant_id", unique: true
+  end
+
   create_table "gdpr_admin_requests", force: :cascade do |t|
     t.integer "tenant_id", null: false
-    t.integer "requester_id", null: false
+    t.integer "requester_id"
     t.string "request_type", null: false
     t.string "status", default: "pending", null: false
     t.datetime "data_older_than", null: false
@@ -102,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_184303) do
   add_foreign_key "activity_logs", "organizations"
   add_foreign_key "activity_logs", "users"
   add_foreign_key "contacts", "organizations"
+  add_foreign_key "gdpr_admin_data_retention_policies", "organizations", column: "tenant_id"
   add_foreign_key "gdpr_admin_requests", "admin_users", column: "requester_id"
   add_foreign_key "gdpr_admin_requests", "organizations", column: "tenant_id"
   add_foreign_key "users", "organizations"
