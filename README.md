@@ -176,9 +176,9 @@ You can define a repeating job with `sidekiq-cron`:
 
 ```ruby
 Sidekiq::Cron::Job.create(
-  class: SyncOrganizationsContactsJob.to_s,
+  class: 'GdprAdmin::DataRetentionPoliciesRunnerJob',
   cron: '0 2 * * *',
-  name: 'Sync Organization Contacts',
+  name: 'Run Data Retention Policies',
   queue: 'cron',
   active_job: true,
 )
