@@ -12,7 +12,11 @@
 Rails engine for processing GDPR processes. GDPR Admin offers a simple interface for defining strategies for automating the process of data access and data removal as required by data privacy regulations like GDPR.
 
 GDPR Admin uses simple Ruby classes, so you're free to code your Data Policies as you see fit. A swiss knife of
-helper methods are available to make the processes even simpler.
+helper methods are available to make the processes even simpler. The focus of the gem is to easily implement:
+
+- [Right of access](https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-of-access/): export a subject's data on request;
+- [Right to erasure](https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/): remove a subject's personal data on request;
+- [Storage limitation](https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/principles/storage-limitation/): hold data for as long as required (data retention policies and offboarding tenants);
 
 ## Installation
 Add this line to your application's Gemfile:
