@@ -35,6 +35,11 @@ Or install it yourself as:
 $ gem install gdpr_admin
 ```
 
+Then install the migrations:
+```bash
+$ rails gdpr_admin:install:migrations
+```
+
 ## Usage
 
 Create your data policies file within `app/gdpr` _(configurable)_ and inherit from `GdprAdmin::ApplicationDataPolicy`.
