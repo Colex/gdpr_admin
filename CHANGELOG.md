@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/Colex/gdpr_admin/compare/v1.2.0...v1.3.0) (2023-03-01)
+
+
+### Features
+
+* add helper for scoping data by given date ([5352e29](https://www.github.com/Colex/gdpr_admin/commit/5352e29e028dd38be8e2c4fe24addcfdf0b8c968))
+
 ## [1.2.0](https://www.github.com/Colex/gdpr_admin/compare/v1.1.0...v1.2.0) (2023-02-16)
 
 
