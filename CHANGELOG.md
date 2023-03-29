@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.1](https://www.github.com/Colex/gdpr_admin/compare/v1.3.0...v1.3.1) (2023-03-29)
+
+
+### Bug Fixes
+
+* do not attempt to anonymize version's object if no policy found ([5685b13](https://www.github.com/Colex/gdpr_admin/commit/5685b138d6f41dffce84be23a62900fba43342ed))
+
 ## [1.3.0](https://www.github.com/Colex/gdpr_admin/compare/v1.2.0...v1.3.0) (2023-03-01)
 
 
