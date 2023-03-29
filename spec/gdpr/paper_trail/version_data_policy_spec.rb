@@ -115,7 +115,7 @@ RSpec.describe PaperTrail::VersionDataPolicy do
       let(:version) { paper_trail_versions(:beatles1) }
 
       context 'when fields are not explicitly given' do
-        it 'does not anonymize version' do
+        it "does not anonymize version's object" do
           version_data_policy.erase(version)
           expect(version.reload).to have_attributes(
             id: version.id,
@@ -123,7 +123,7 @@ RSpec.describe PaperTrail::VersionDataPolicy do
             item_id: version.item_id,
             event: version.event,
             whodunnit: version.whodunnit,
-            ip: '66.77.88.99',
+            ip: '217.54.108.228',
             object: {
               'name' => 'The Beatles',
             },

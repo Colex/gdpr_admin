@@ -9,13 +9,7 @@ module GdprAdmin
 
       def erase(version, item_fields = nil)
         item_fields ||= infer_item_fields(version)
-        return if item_fields.nil?
-
-        base_changes = {
-          object: anonymize_version_object(version, item_fields),
-          object_changes: anonymize_version_object_changes(version, item_fields),
-        }.compact
-        erase_fields(version, fields, base_changes)
+        erase_fields(version, fields, base_changes(version, item_fields))
       end
 
       def fields
@@ -23,6 +17,15 @@ module GdprAdmin
       end
 
       private
+
+      def base_changes(version, item_fields)
+        return {} if item_fields.blank?
+
+        {
+          object: anonymize_version_object(version, item_fields),
+          object_changes: anonymize_version_object_changes(version, item_fields),
+        }.compact
+      end
 
       def infer_item_fields(version)
         infer_data_policy_class(version)&.new(request)&.try(:fields)
