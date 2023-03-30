@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ContactDataPolicy < GdprAdmin::ApplicationDataPolicy
+  before_process_record ->(contact) { skip_record! if contact.job_title == 'CEO' }
+
   def fields
     [
       { field: :name, method: :anonymize_name },

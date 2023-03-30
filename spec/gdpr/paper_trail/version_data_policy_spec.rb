@@ -112,7 +112,7 @@ RSpec.describe PaperTrail::VersionDataPolicy do
     end
 
     context "when item's data policy is not defined" do
-      let(:version) { paper_trail_versions(:beatles1) }
+      let(:version) { paper_trail_versions(:admin_user1) }
 
       context 'when fields are not explicitly given' do
         it "does not anonymize version's object" do
@@ -125,10 +125,10 @@ RSpec.describe PaperTrail::VersionDataPolicy do
             whodunnit: version.whodunnit,
             ip: '217.54.108.228',
             object: {
-              'name' => 'The Beatles',
+              'name' => 'Don Corleone',
             },
             object_changes: {
-              'name' => [nil, 'The Beatles'],
+              'name' => [nil, 'Don Corleone'],
             },
             created_at: version.created_at,
           )
@@ -152,10 +152,10 @@ RSpec.describe PaperTrail::VersionDataPolicy do
             whodunnit: version.whodunnit,
             ip: '217.54.108.228',
             object: {
-              'name' => 'Lindsay Weber',
+              'name' => 'Pei Wunsch',
             },
             object_changes: {
-              'name' => [nil, 'Lindsay Weber'],
+              'name' => [nil, 'Pei Wunsch'],
             },
             created_at: version.created_at,
           )

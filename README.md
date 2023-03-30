@@ -143,6 +143,41 @@ same anonymized value. _(note: different values may also yield the same value)_
 
 To use the built-in anonymizer functions, you need to install the gem `faker`.
 
+## Data Policy Hooks
+For advanced use cases, you may install hooks that are run at different stages of the data policy process.
+
+### `before_process`
+Will be run before the policy is executed. Calling `skip_data_policy!` will raise `GdprAdmin::SkipDataPolicyError` and
+stop the execution of the data policy.
+
+```ruby
+class ContactDataPolicy < GdprAdmin::ApplicationDataPolicy
+  before_process :skip_internal_contacts!
+
+  private
+
+  def skip_internal_contacts!
+    skip_data_policy! if contact.email =~ /.*@company\.com/
+  end
+end
+```
+
+### `before_process_record`
+Called before processing a record (either erasing or exporting). Calling `skip_record!` will raise `GdprAdmin::SkipRecordError` and
+skip processing that particular record.
+
+```ruby
+class UserDataPolicy < GdprAdmin::ApplicationDataPolicy
+  before_process :skip_super_admins!
+
+  private
+
+  def skip_super_admins!(user)
+    skip_record! if user.role == 'super_admin'
+  end
+end
+```
+
 ## GDPR Request
 A GDPR Request (`GdprAdmin::Request`) represents a request to remove a subject's data, tenant's data, or export subject data.
 

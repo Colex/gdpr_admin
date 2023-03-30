@@ -34,3 +34,12 @@ jerry1:
     last_name: [null, "Seinfeld"]
     gender: ["female", "male"]
     job_title: ["Unemployed", "Comedian"]
+admin_user1:
+  item: admin_user_a
+  item_type: AdminUser
+  event: create
+  ip: "66.77.88.99"
+  object:
+    name: Don Corleone
+  object_changes:
+    name: [null, "Don Corleone"]

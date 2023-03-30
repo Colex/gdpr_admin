@@ -23,6 +23,7 @@ RSpec.describe ContactDataPolicy, type: :data_policy do
         contacts(:kramer),
         contacts(:george),
         contacts(:hank),
+        contacts(:morty),
       )
     end
   end

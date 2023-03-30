@@ -24,6 +24,7 @@ RSpec.describe UserDataPolicy, type: :data_policy do
         users(:leia),
         users(:paul),
         users(:george),
+        users(:ringo),
       )
     end
   end

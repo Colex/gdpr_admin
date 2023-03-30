@@ -35,7 +35,7 @@ module GdprAdmin
       GdprAdmin.load_data_policies
       with_lock { processing! }
       with_lock do
-        GdprAdmin.config.tenant_adapter.with_tenant(tenant) { process_policies }
+        process_policies
         completed!
       end
     rescue StandardError
@@ -63,13 +63,7 @@ module GdprAdmin
 
     def process_policies
       ApplicationDataPolicy.descendants.each do |policy_class|
-        policy = policy_class.new(self)
-        policy.scope.find_each do |record|
-          policy.export(record) if export?
-          policy.erase(record) if erase?
-        end
-      rescue SkipDataPolicyError
-        next
+        policy_class.process(self)
       end
     end
 

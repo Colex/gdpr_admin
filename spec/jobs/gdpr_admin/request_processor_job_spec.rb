@@ -45,6 +45,20 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
             email: "anonymized.user#{users(:george).id}@company.org",
             anonymized_at: anonymization_time,
           ),
+          have_attributes(
+            id: users(:ringo).id,
+          ),
+        )
+      end
+
+      it 'does not anonymize users skipped in preprocessors' do
+        job.perform(request)
+        expect(users(:ringo)).to have_attributes(
+          id: users(:ringo).id,
+          first_name: 'Ringo',
+          last_name: 'Starr',
+          email: 'ringo.starr@thebeatles.com',
+          anonymized_at: nil,
         )
       end
 
@@ -132,6 +146,7 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
             updated_at: Time.utc(2023, 2, 1),
             anonymized_at: anonymization_time,
           ),
+          have_attributes(id: contacts(:morty).id),
         )
       end
 
@@ -157,6 +172,31 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
             country_code3: 'USA',
             updated_at: Time.utc(2023, 2, 1),
           ),
+        )
+      end
+
+      it 'does not anonymize contacts skipped in preprocessors' do
+        job.perform(request)
+        expect(contacts(:morty)).to have_attributes(
+          id: contacts(:morty).id,
+          name: 'Morty Seinfeld',
+          first_name: 'Morty',
+          last_name: 'Seinfeld',
+          gender: 'male',
+          company: 'Seinfeld Co',
+          job_title: 'CEO',
+          email: 'morty@seinfeld.com',
+          phone_number: '212-321-5672',
+          street_address1: '64 West 80st Street',
+          street_address2: 'Apt 3A',
+          city: 'New York',
+          state: 'NY',
+          zip: '10025',
+          country: 'USA',
+          country_code2: 'US',
+          country_code3: 'USA',
+          updated_at: Time.utc(2023, 2, 14),
+          anonymized_at: nil,
         )
       end
 

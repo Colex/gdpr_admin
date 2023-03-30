@@ -54,6 +54,25 @@ george:
   country_code2: GB
   country_code3: GBR
   updated_at: 2023-02-01 00:00:00
+morty:
+  organization: beatles
+  name: Morty Seinfeld
+  first_name: Morty
+  last_name: Seinfeld
+  gender: male
+  company: Seinfeld Co
+  job_title: CEO
+  email: morty@seinfeld.com
+  phone_number: 212-321-5672
+  street_address1: 64 West 80st Street
+  street_address2: Apt 3A
+  city: New York
+  state: NY
+  zip: 10025
+  country: USA
+  country_code2: US
+  country_code3: USA
+  updated_at: 2023-02-14 00:00:00
 
 # Star Wars contacts
 hank:

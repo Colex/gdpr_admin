@@ -3,6 +3,7 @@ anakin:
   organization: star_wars
   first_name: Anakin
   last_name: Skywalker
+  role: jedi
   email: anakin.skywalker@jedi.com
   password_digest: anakin123
   updated_at: 2023-02-01 00:00:00
@@ -10,6 +11,7 @@ leia:
   organization: star_wars
   first_name: Leia
   last_name: Organa
+  role: princess
   email: leia@royal.gov
   password_digest: leia12345
   updated_at: 2023-02-01 00:00:00
@@ -19,6 +21,7 @@ john:
   organization: beatles
   first_name: John
   last_name: Lennon
+  role: singer
   email: john.lennon@thebeatles.com
   password_digest: john123
   updated_at: 2023-02-16 00:00:00
@@ -26,6 +29,7 @@ paul:
   organization: beatles
   first_name: Paul
   last_name: McCartney
+  role: singer
   email: paul.mccartney@thebeatles.com
   password_digest: paul123
   updated_at: 2023-02-14 00:00:00
@@ -33,6 +37,15 @@ george:
   organization: beatles
   first_name: George
   last_name: Harrison
+  role: guitarist
   email: george.harrison@thebeatles.com
   password_digest: george123
+  updated_at: 2023-02-01 00:00:00
+ringo:
+  organization: beatles
+  first_name: Ringo
+  last_name: Starr
+  role: drummer
+  email: ringo.starr@thebeatles.com
+  password_digest: ringo123
   updated_at: 2023-02-01 00:00:00
