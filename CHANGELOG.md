@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/Colex/gdpr_admin/compare/v1.3.0...v1.4.0) (2023-03-30)
+
+
+### Features
+
+* add `before_process` and `before_process_record` hooks ([ccaaecc](https://www.github.com/Colex/gdpr_admin/commit/ccaaecc845448996835b321fd36f6b611bd7f818))
+
+
+### Bug Fixes
+
+* do not attempt to anonymize version's object if no policy found ([5685b13](https://www.github.com/Colex/gdpr_admin/commit/5685b138d6f41dffce84be23a62900fba43342ed))
+
 ## [1.3.0](https://www.github.com/Colex/gdpr_admin/compare/v1.2.0...v1.3.0) (2023-03-01)
 
 
