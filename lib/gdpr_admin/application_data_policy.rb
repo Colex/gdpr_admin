@@ -43,11 +43,15 @@ module GdprAdmin
     def process
       GdprAdmin.config.tenant_adapter.with_tenant(request.tenant) do
         run_preprocessors
-        scope.find_each do |record|
-          process_record(record)
-        end
+        process_scope(scope)
       rescue SkipDataPolicyError
         nil
+      end
+    end
+
+    def process_scope(scope)
+      scope.find_each do |record|
+        process_record(record)
       end
     end
 
@@ -80,9 +84,13 @@ module GdprAdmin
     def call_hook(hook, value = nil)
       hook = method(hook) unless hook.respond_to?(:call)
 
-      arity = hook.arity
+      arity = arity_of(hook)
       args = [value].take(arity).reverse
       instance_exec(*args, &hook)
+    end
+
+    def arity_of(method_or_proc)
+      defined?(T::Utils.arity) ? T::Utils.arity(method_or_proc) : method_or_proc.arity
     end
   end
 end
