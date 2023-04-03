@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.2](https://www.github.com/Colex/gdpr_admin/compare/v1.4.1...v1.4.2) (2023-04-03)
+
+
+### Bug Fixes
+
+* use PaperTrail version's value as seed ([e3ed703](https://www.github.com/Colex/gdpr_admin/commit/e3ed70372222b0da183bde68cb2d0eb7e6c684af))
+
 ### [1.4.1](https://www.github.com/Colex/gdpr_admin/compare/v1.4.0...v1.4.1) (2023-04-03)
 
 
