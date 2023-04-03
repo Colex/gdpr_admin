@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/Colex/gdpr_admin/compare/v1.4.0...v1.4.1) (2023-04-03)
+
+
+### Bug Fixes
+
+* support for sorbet signatures ([55031e6](https://www.github.com/Colex/gdpr_admin/commit/55031e61afbae03b22d60faaec3e93ded8101065))
+* use PaperTrail version's value as seed ([cd71429](https://www.github.com/Colex/gdpr_admin/commit/cd71429261b0c7e0b55b2d03ded82c1cdf89ac72))
+
 ## [1.4.0](https://www.github.com/Colex/gdpr_admin/compare/v1.3.0...v1.4.0) (2023-03-30)
 
 
