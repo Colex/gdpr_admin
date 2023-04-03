@@ -32,13 +32,7 @@ module GdprAdmin
       end
 
       def infer_data_policy_class(version)
-        model = version.item_type.constantize.new
-        return model.data_policy_class if model.respond_to?(:data_policy_class)
-
-        prefix = model.data_policy_prefix if model.respond_to?(:data_policy_prefix)
-        "#{prefix}#{version.item_type}DataPolicy".constantize
-      rescue NameError
-        nil
+        model_data_policy_class(version.item_type)
       end
     end
   end
