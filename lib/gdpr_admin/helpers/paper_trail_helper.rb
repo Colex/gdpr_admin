@@ -29,7 +29,7 @@ module GdprAdmin
           field_value = object[field_name]
           next if field_value.nil?
 
-          new_value = anonymize_field(version.item, field)
+          new_value = anonymize_field_value(version.item, field.merge(seed: field_value))
           object.merge!(field_name => new_value)
         end
         object
