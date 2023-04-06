@@ -33,13 +33,13 @@ module GdprAdmin
 
     def process!
       GdprAdmin.load_data_policies
-      with_lock { processing! }
+      reload.with_lock { processing! }
       with_lock do
         process_policies
         completed!
       end
     rescue StandardError
-      with_lock { failed! }
+      failed!
       raise
     end
 
