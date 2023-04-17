@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://www.github.com/Colex/gdpr_admin/compare/v1.4.2...v1.5.0) (2023-04-17)
+
+
+### Features
+
+* add subject column to gdpr_admin_requests and support `subject_scope` ([e0b5f44](https://www.github.com/Colex/gdpr_admin/commit/e0b5f449781f0db35fa5d7f9dffc218958b28b6e))
+
+
+### Bug Fixes
+
+* do not lock request when transitioning to `failed` status ([088de05](https://www.github.com/Colex/gdpr_admin/commit/088de05d4b438dd526eae7f57de9c7e92cb8af58))
+
 ### [1.4.2](https://www.github.com/Colex/gdpr_admin/compare/v1.4.1...v1.4.2) (2023-04-03)
 
 
