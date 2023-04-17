@@ -29,6 +29,8 @@ module GdprAdmin
     after_create_commit :schedule_processing
 
     validates :status, presence: true
+    validates :subject, presence: true, if: :subject_request?
+    validates :subject, absence: true, unless: :subject_request?
     validate :valid_status_transition?
 
     def process!
@@ -41,6 +43,10 @@ module GdprAdmin
     rescue StandardError
       failed!
       raise
+    end
+
+    def subject_request?
+      export_subject? || erase_subject?
     end
 
     def erase?

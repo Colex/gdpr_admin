@@ -43,14 +43,14 @@ module GdprAdmin
     def process
       GdprAdmin.config.tenant_adapter.with_tenant(request.tenant) do
         run_preprocessors
-        process_scope(scope)
+        process_scope
       rescue SkipDataPolicyError
         nil
       end
     end
 
-    def process_scope(scope)
-      scope.find_each do |record|
+    def process_scope
+      policy_scope.find_each do |record|
         process_record(record)
       end
     end
@@ -58,6 +58,12 @@ module GdprAdmin
     protected
 
     attr_reader :request
+
+    def policy_scope
+      return subject_scope if request.subject_request? && respond_to?(:subject_scope)
+
+      scope
+    end
 
     def process_record(record)
       run_record_preprocessors(record)

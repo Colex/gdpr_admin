@@ -8,7 +8,7 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
   subject(:job) { described_class.new }
 
   describe '#perform' do
-    context 'when the request is an erasure' do
+    context 'when the request is a tenant data erasure' do
       let(:request) do
         GdprAdmin::Request.create(
           tenant: organizations(:beatles),
@@ -197,6 +197,104 @@ RSpec.describe GdprAdmin::RequestProcessorJob, type: :job do
           country_code3: 'USA',
           updated_at: Time.utc(2023, 2, 14),
           anonymized_at: nil,
+        )
+      end
+
+      it 'updates the request status to :completed' do
+        job.perform(request)
+      rescue StandardError
+        expect(request.reload.status).to eql('completed')
+      end
+
+      it 'does not create new paper trail versions' do
+        expect { job.perform(request) }.not_to change(PaperTrail::Version, :count)
+      end
+
+      context 'when request fails to process' do
+        before do
+          allow_any_instance_of(UserDataPolicy).to receive(:erase).and_raise(StandardError) # rubocop:disable RSpec/AnyInstance
+        end
+
+        it 'updates the request status to :failed' do
+          job.perform(request)
+        rescue StandardError
+          expect(request.reload.status).to eql('failed')
+        end
+      end
+    end
+
+    context 'when the request is a subject data erasure' do
+      let(:request) do
+        GdprAdmin::Request.create(
+          tenant: organizations(:beatles),
+          requester: admin_users(:admin_user_a),
+          request_type: :erase_subject,
+          subject: 'paul.mccartney@thebeatles.com',
+          data_older_than: Time.utc(2023, 2, 15),
+        )
+      end
+      let(:anonymization_time) { Time.utc(2023, 2, 1, 0, 20) }
+
+      it 'anonymizes user with matching subject email' do
+        Timecop.freeze(anonymization_time) do
+          job.perform(request)
+        end
+        expect(organizations(:beatles).users.to_a).to contain_exactly(
+          have_attributes(
+            id: users(:john).id,
+            first_name: 'John',
+            last_name: 'Lennon',
+            role: 'singer',
+            email: 'john.lennon@thebeatles.com',
+            anonymized_at: nil,
+          ),
+          have_attributes(
+            id: users(:paul).id,
+            first_name: 'Anonymized',
+            last_name: "User #{users(:paul).id}",
+            role: 'singer',
+            email: "anonymized.user#{users(:paul).id}@company.org",
+            anonymized_at: anonymization_time,
+          ),
+          have_attributes(
+            id: users(:george).id,
+            first_name: 'George',
+            last_name: 'Harrison',
+            role: 'guitarist',
+            email: 'george.harrison@thebeatles.com',
+            anonymized_at: nil,
+          ),
+          have_attributes(
+            id: users(:ringo).id,
+            first_name: 'Ringo',
+            last_name: 'Starr',
+            role: 'drummer',
+            email: 'ringo.starr@thebeatles.com',
+            anonymized_at: nil,
+          ),
+        )
+      end
+
+      it 'does not anonymize users in other organizations' do
+        request.update!(subject: 'anakin.skywalker@jedi.com')
+        job.perform(request)
+        expect(organizations(:star_wars).users.to_a).to contain_exactly(
+          have_attributes(
+            id: users(:anakin).id,
+            first_name: 'Anakin',
+            last_name: 'Skywalker',
+            email: 'anakin.skywalker@jedi.com',
+            anonymized_at: nil,
+            updated_at: Time.utc(2023, 2, 1),
+          ),
+          have_attributes(
+            id: users(:leia).id,
+            first_name: 'Leia',
+            last_name: 'Organa',
+            email: 'leia@royal.gov',
+            anonymized_at: nil,
+            updated_at: Time.utc(2023, 2, 1),
+          ),
         )
       end
 

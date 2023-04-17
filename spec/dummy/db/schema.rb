@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_16_171202) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_17_104258) do
   create_table "activity_logs", force: :cascade do |t|
     t.integer "organization_id", null: false
     t.integer "user_id", null: false
@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_16_171202) do
     t.datetime "data_older_than", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "subject"
     t.index ["requester_id"], name: "index_gdpr_admin_requests_on_requester_id"
     t.index ["tenant_id"], name: "index_gdpr_admin_requests_on_tenant_id"
   end
