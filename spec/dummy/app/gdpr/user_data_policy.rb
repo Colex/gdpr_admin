@@ -16,6 +16,10 @@ class UserDataPolicy < GdprAdmin::ApplicationDataPolicy
     scope_by_date(User)
   end
 
+  def subject_scope
+    scope.where(email: request.subject)
+  end
+
   def erase(user)
     erase_fields(user, fields, { anonymized_at: Time.zone.now })
   end

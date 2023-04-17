@@ -47,10 +47,18 @@ Implement the methods `#scope`, `#export` and `#erase` for the new data policy. 
 able to access the `GdprAdmin::Request` object in any method by calling the method `request` - you can, therefore, have
 different scopes and different removal behaviors depending on the request.
 
+Optinally, you may declare a `#subject_scope` method with logic for scoping subject data. If this method is not present,
+it will fallback to the `#scope` method.
+
 ```ruby
 class UserDataPolicy < GdprAdmin::ApplicationDataPolicy
   def scope
     User.with_deleted.where(updated_at: ...request.data_older_than)
+  end
+
+  # Optional
+  def subject_scope
+    scope.where(email: request.subject)
   end
 
   def erase(user)

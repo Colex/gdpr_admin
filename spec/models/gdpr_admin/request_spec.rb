@@ -47,6 +47,26 @@ RSpec.describe GdprAdmin::Request, type: :model do
     end
   end
 
+  describe '#subject_request?' do
+    it 'returns true for export_subject?' do
+      request.request_type = :export_subject
+
+      expect(request.subject_request?).to eq(true)
+    end
+
+    it 'returns false for erase_data?' do
+      request.request_type = :erase_data
+
+      expect(request.subject_request?).to eq(false)
+    end
+
+    it 'returns true for erase_subject?' do
+      request.request_type = :erase_subject
+
+      expect(request.subject_request?).to eq(true)
+    end
+  end
+
   describe '#save' do
     context 'when request is new' do
       subject(:request) { described_class.new }
@@ -57,16 +77,15 @@ RSpec.describe GdprAdmin::Request, type: :model do
       end
 
       context 'when request is valid' do
-        subject(:request) do
-          described_class.new(
-            tenant: Organization.create(name: 'Test'),
-            requester: AdminUser.create(name: 'Test', email: 'test@admin.com'),
-            request_type: request_type,
-          )
-        end
-
         context 'when request is an export' do
-          let(:request_type) { :export_subject }
+          subject(:request) do
+            described_class.new(
+              tenant: Organization.create(name: 'Test'),
+              requester: AdminUser.create(name: 'Test', email: 'test@admin.com'),
+              request_type: :export_subject,
+              subject: 'jerry@seinfeld.com',
+            )
+          end
 
           it 'schedules a RequestProcessorJob' do
             GdprAdmin.config.export_grace_period = 1.minute
@@ -80,7 +99,13 @@ RSpec.describe GdprAdmin::Request, type: :model do
         end
 
         context 'when request is an erasure' do
-          let(:request_type) { :erase_data }
+          subject(:request) do
+            described_class.new(
+              tenant: Organization.create(name: 'Test'),
+              requester: AdminUser.create(name: 'Test', email: 'test@admin.com'),
+              request_type: :erase_data,
+            )
+          end
 
           it 'schedules a RequestProcessorJob' do
             GdprAdmin.config.erasure_grace_period = 6.hours
@@ -105,6 +130,80 @@ RSpec.describe GdprAdmin::Request, type: :model do
   end
 
   describe '#valid?' do
+    context 'when subject is present' do
+      subject(:request) do
+        described_class.new(
+          tenant: organizations(:beatles),
+          request_type: request_type,
+          subject: 'jerry@seinfeld.com',
+        )
+      end
+
+      context 'when request type is export_subject' do
+        let(:request_type) { :export_subject }
+
+        it 'does not add validation error to subject' do
+          request.valid?
+          expect(request.errors[:subject]).to eql([])
+        end
+      end
+
+      context 'when request type is erase_subject' do
+        let(:request_type) { :erase_subject }
+
+        it 'does not add validation error to subject' do
+          request.valid?
+          expect(request.errors[:subject]).to eql([])
+        end
+      end
+
+      context 'when request type is erase_data' do
+        let(:request_type) { :erase_data }
+
+        it 'adds validation error to subject' do
+          request.valid?
+          expect(request.errors[:subject]).to eq(['must be blank'])
+        end
+      end
+    end
+
+    context 'when subject is not present' do
+      subject(:request) do
+        described_class.new(
+          tenant: organizations(:beatles),
+          request_type: request_type,
+          subject: nil,
+        )
+      end
+
+      context 'when request type is export_subject' do
+        let(:request_type) { :export_subject }
+
+        it 'adds validation error to subject' do
+          request.valid?
+          expect(request.errors[:subject]).to eq(["can't be blank"])
+        end
+      end
+
+      context 'when request type is erase_subject' do
+        let(:request_type) { :erase_subject }
+
+        it 'adds validation error to subject' do
+          request.valid?
+          expect(request.errors[:subject]).to eq(["can't be blank"])
+        end
+      end
+
+      context 'when request type is erase_data' do
+        let(:request_type) { :erase_data }
+
+        it 'does not add validation error to subject' do
+          request.valid?
+          expect(request.errors[:subject]).to eql([])
+        end
+      end
+    end
+
     context 'when transitioning status' do
       subject(:request) do
         described_class.create(
