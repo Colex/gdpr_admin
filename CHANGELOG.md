@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.3](https://www.github.com/Colex/gdpr_admin/compare/v1.4.2...v1.4.3) (2023-04-17)
+
+
+### Bug Fixes
+
+* do not lock request when transitioning to `failed` status ([088de05](https://www.github.com/Colex/gdpr_admin/commit/088de05d4b438dd526eae7f57de9c7e92cb8af58))
+
 ### [1.4.2](https://www.github.com/Colex/gdpr_admin/compare/v1.4.1...v1.4.2) (2023-04-03)
 
 
