@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://www.github.com/Colex/gdpr_admin/compare/v1.5.0...v1.6.0) (2023-05-22)
+
+
+### Features
+
+* support polymorphic association for requester is requests ([3d10a5a](https://www.github.com/Colex/gdpr_admin/commit/3d10a5a0aa02f1873cbeaa58644e17f236992b7f))
+
 ## [1.5.0](https://www.github.com/Colex/gdpr_admin/compare/v1.4.2...v1.5.0) (2023-04-17)
 
 
