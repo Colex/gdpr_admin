@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_104258) do
 
   create_table "gdpr_admin_requests", force: :cascade do |t|
     t.integer "tenant_id", null: false
+    t.string "requester_type"
     t.integer "requester_id"
     t.string "request_type", null: false
     t.string "status", default: "pending", null: false
@@ -75,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_104258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "subject"
-    t.index ["requester_id"], name: "index_gdpr_admin_requests_on_requester_id"
+    t.index ["requester_type", "requester_id"], name: "index_gdpr_admin_requests_on_requester"
     t.index ["tenant_id"], name: "index_gdpr_admin_requests_on_tenant_id"
   end
 
@@ -115,7 +116,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_104258) do
   add_foreign_key "activity_logs", "users"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "gdpr_admin_data_retention_policies", "organizations", column: "tenant_id"
-  add_foreign_key "gdpr_admin_requests", "admin_users", column: "requester_id"
   add_foreign_key "gdpr_admin_requests", "organizations", column: "tenant_id"
   add_foreign_key "users", "organizations"
 end

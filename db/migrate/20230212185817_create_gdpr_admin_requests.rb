@@ -4,7 +4,7 @@ class CreateGdprAdminRequests < ActiveRecord::Migration[7.0]
   def change
     create_table :gdpr_admin_requests do |t|
       t.references :tenant, null: false, foreign_key: { to_table: :organizations }
-      t.references :requester, null: true, foreign_key: { to_table: :admin_users }
+      t.references :requester, null: true, polymorphic: true
       t.string :request_type, null: false
       t.string :status, default: 'pending', null: false
       t.datetime :data_older_than, null: false

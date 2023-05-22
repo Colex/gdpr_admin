@@ -3,7 +3,7 @@
 module GdprAdmin
   class Request < ApplicationRecord
     belongs_to :tenant, class_name: GdprAdmin.config.tenant_class
-    belongs_to :requester, class_name: GdprAdmin.config.requester_class, optional: true
+    belongs_to :requester, polymorphic: true, optional: true
 
     VALID_STATUS_TRANSITIONS = {
       pending: %i[processing],
