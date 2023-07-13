@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://www.github.com/Colex/gdpr_admin/compare/v1.6.0...v1.7.0) (2023-07-13)
+
+
+### Features
+
+* helper for masking IPv4 and IPv6 ([e77b76b](https://www.github.com/Colex/gdpr_admin/commit/e77b76be1395b32b39d0dda8e3a2ac1c08bbc6f1))
+
 ## [1.6.0](https://www.github.com/Colex/gdpr_admin/compare/v1.5.0...v1.6.0) (2023-05-22)
 
 
