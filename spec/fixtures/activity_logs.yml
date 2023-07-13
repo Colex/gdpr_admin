@@ -1,0 +1,32 @@
+anakin_activity_log_a:
+  organization: star_wars
+  user: anakin
+  sign_in_ip: "66.77.88.99"
+  city: New York
+  region: NY
+  country: US
+  updated_at: 2023-02-01 00:00:00
+john_activity_log_a:
+  organization: beatles
+  user: john
+  sign_in_ip: "66.77.88.99"
+  city: New York
+  region: NY
+  country: US
+  updated_at: 2023-02-01 00:00:00
+john_activity_log_b:
+  organization: beatles
+  user: john
+  sign_in_ip: "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+  city: Austin
+  region: TX
+  country: US
+  updated_at: 2023-02-14 00:00:00
+john_activity_log_c:
+  organization: beatles
+  user: john
+  sign_in_ip: "66.77.88.99"
+  city: New York
+  region: NY
+  country: US
+  updated_at: 2023-02-16 00:00:00
