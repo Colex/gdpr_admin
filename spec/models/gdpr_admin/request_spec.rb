@@ -337,6 +337,34 @@ RSpec.describe GdprAdmin::Request, type: :model do
           expect(request.errors.messages.keys).to include(:status)
         end
       end
+
+      context 'when status is canceled' do
+        let(:status) { :canceled }
+
+        it 'cannot transition to pending' do
+          request.status = :pending
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to processing' do
+          request.status = :processing
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to failed' do
+          request.status = :failed
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to completed' do
+          request.status = :completed
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+      end
     end
   end
 end
