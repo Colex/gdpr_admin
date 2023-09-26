@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://www.github.com/Colex/gdpr_admin/compare/v1.7.0...v1.8.0) (2023-09-26)
+
+
+### Features
+
+* add 'canceled' status ([3a3bc97](https://www.github.com/Colex/gdpr_admin/commit/3a3bc9776a79bc983096bb07671fd34387b60df7))
+
 ## [1.7.0](https://www.github.com/Colex/gdpr_admin/compare/v1.6.0...v1.7.0) (2023-07-13)
 
 
