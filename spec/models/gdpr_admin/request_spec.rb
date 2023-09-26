@@ -129,6 +129,21 @@ RSpec.describe GdprAdmin::Request, type: :model do
     end
   end
 
+  describe 'cancel!' do
+    subject(:request) do
+      described_class.create(
+        tenant: organizations(:beatles),
+        request_type: :erase_data,
+        status: :pending,
+      )
+    end
+
+    it 'changes the status to "canceled"' do
+      request.cancel!
+      expect(request.reload.status).to eql('canceled')
+    end
+  end
+
   describe '#valid?' do
     context 'when subject is present' do
       subject(:request) do
@@ -224,6 +239,11 @@ RSpec.describe GdprAdmin::Request, type: :model do
           expect(request.valid?).to be(true)
         end
 
+        it 'can transition to canceled' do
+          request.status = :canceled
+          expect(request.valid?).to be(true)
+        end
+
         it 'cannot transition to completed' do
           request.status = :completed
           request.valid?
@@ -242,6 +262,12 @@ RSpec.describe GdprAdmin::Request, type: :model do
 
         it 'cannot transition to pending' do
           request.status = :pending
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
+        it 'cannot transition to canceled' do
+          request.status = :canceled
           request.valid?
           expect(request.errors.messages.keys).to include(:status)
         end
@@ -266,6 +292,12 @@ RSpec.describe GdprAdmin::Request, type: :model do
           expect(request.errors.messages.keys).to include(:status)
         end
 
+        it 'cannot transition to canceled' do
+          request.status = :canceled
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
+        end
+
         it 'cannot transition to processing' do
           request.status = :processing
           request.valid?
@@ -285,6 +317,12 @@ RSpec.describe GdprAdmin::Request, type: :model do
         it 'can transition to pending' do
           request.status = :pending
           expect(request.valid?).to be(true)
+        end
+
+        it 'cannot transition to canceled' do
+          request.status = :canceled
+          request.valid?
+          expect(request.errors.messages.keys).to include(:status)
         end
 
         it 'cannot transition to processing' do

@@ -6,10 +6,11 @@ module GdprAdmin
     belongs_to :requester, polymorphic: true, optional: true
 
     VALID_STATUS_TRANSITIONS = {
-      pending: %i[processing],
+      pending: %i[processing canceled],
       processing: %i[completed failed],
       completed: [],
       failed: %i[pending],
+      canceled: %i[],
     }.freeze
 
     enum status: {
@@ -17,6 +18,7 @@ module GdprAdmin
       processing: 'processing',
       completed: 'completed',
       failed: 'failed',
+      canceled: 'canceled',
     }
 
     enum request_type: {
@@ -32,6 +34,10 @@ module GdprAdmin
     validates :subject, presence: true, if: :subject_request?
     validates :subject, absence: true, unless: :subject_request?
     validate :valid_status_transition?
+
+    def cancel!
+      canceled!
+    end
 
     def process!
       GdprAdmin.load_data_policies
