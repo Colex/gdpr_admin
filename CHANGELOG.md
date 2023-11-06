@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.8.1](https://www.github.com/Colex/gdpr_admin/compare/v1.8.0...v1.8.1) (2023-11-06)
+
+
+### Bug Fixes
+
+* do not attempt to mask invalid IP addresses ([1550f8a](https://www.github.com/Colex/gdpr_admin/commit/1550f8a177d9b1acccbd5a95bf3caf08cbe14946))
+
 ## [1.8.0](https://www.github.com/Colex/gdpr_admin/compare/v1.7.0...v1.8.0) (2023-09-26)
 
 
