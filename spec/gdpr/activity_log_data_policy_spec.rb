@@ -28,14 +28,31 @@ RSpec.describe ActivityLogDataPolicy, type: :data_policy do
   end
 
   describe '#erase' do
-    describe 'when record has an IPv4' do
+    describe 'when record has invalid IP' do
       let(:activity_log) { activity_logs(:john_activity_log_a) }
 
-      it 'anonymizes the record data with masked IPv4' do
+      it 'anonymizes the record data without masking the IP value' do
         policy.erase(activity_log)
         expect(activity_log.reload).to have_attributes(
           organization: organizations(:beatles),
           user: users(:john),
+          sign_in_ip: 'unknown',
+          city: 'New York',
+          region: 'NY',
+          country: 'US',
+          updated_at: Time.utc(2023, 2, 1),
+        )
+      end
+    end
+
+    describe 'when record has an IPv4' do
+      let(:activity_log) { activity_logs(:anakin_activity_log_a) }
+
+      it 'anonymizes the record data with masked IPv4' do
+        policy.erase(activity_log)
+        expect(activity_log.reload).to have_attributes(
+          organization: organizations(:star_wars),
+          user: users(:anakin),
           sign_in_ip: '66.77.88.0',
           city: 'New York',
           region: 'NY',

@@ -9,7 +9,7 @@ anakin_activity_log_a:
 john_activity_log_a:
   organization: beatles
   user: john
-  sign_in_ip: "66.77.88.99"
+  sign_in_ip: "unknown"
   city: New York
   region: NY
   country: US
