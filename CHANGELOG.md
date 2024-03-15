@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://www.github.com/Colex/gdpr_admin/compare/v1.8.1...v1.9.0) (2024-03-15)
+
+
+### Features
+
+* add options to turn off rollback on failure behaviour ([eab9244](https://www.github.com/Colex/gdpr_admin/commit/eab924453b0a358cd1141f4a84c9dcb160be9a71))
+
 ### [1.8.1](https://www.github.com/Colex/gdpr_admin/compare/v1.8.0...v1.8.1) (2023-11-06)
 
 
