@@ -3,7 +3,7 @@
 module GdprAdmin
   class Configuration
     attr_accessor :tenant_class, :data_policies_path, :default_job_queue,
-                  :erasure_grace_period, :export_grace_period
+                  :erasure_grace_period, :export_grace_period, :rollback_on_failure
     attr_writer :tenant_adapter
 
     def initialize
@@ -13,6 +13,7 @@ module GdprAdmin
       @default_job_queue = :default
       @erasure_grace_period = 4.hours
       @export_grace_period = nil
+      @rollback_on_failure = true
     end
 
     def tenant_adapter

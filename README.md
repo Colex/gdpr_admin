@@ -382,6 +382,15 @@ GdprAdmin.configure do |config|
 end
 ```
 
+#### Rollback on Failure
+By default, GDPR Admin will attempt to rollback all changes made during the processing a Request in case it fails during the processing. This can be turned of with the flag `rollback_on_failure`. In this situation, all changes will be committed as soon as they are done.
+
+```ruby
+GdprAdmin.configure do |config|
+  config.rollback_on_failure = false
+end
+```
+
 ### Jobs
 Requests are processed asynchronously using ActiveJob.
 

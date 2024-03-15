@@ -41,8 +41,8 @@ module GdprAdmin
 
     def process!
       GdprAdmin.load_data_policies
-      reload.with_lock { processing! }
-      with_lock do
+      reload.lock_strategy { processing! }
+      lock_strategy do
         process_policies
         completed!
       end
@@ -65,6 +65,13 @@ module GdprAdmin
 
     def schedule_processing
       RequestProcessorJob.set(wait: grace_period).perform_later(self)
+    end
+
+    def lock_strategy(&block)
+      return with_lock(&block) if GdprAdmin.config.rollback_on_failure
+      return with_advisory_lock(to_global_id.to_s, &block) if respond_to?(:with_advisory_lock)
+
+      yield
     end
 
     private
